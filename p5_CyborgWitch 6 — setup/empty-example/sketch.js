@@ -71,7 +71,7 @@ function draw() {
       fill(0, colourX, colourY);
     
   if (screen==1) {
-      background(R, R, 0);
+      background(R, 0, 0);
       push();
       stroke(0, 255, 0);
       strokeWeight(5);
