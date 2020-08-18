@@ -89,11 +89,16 @@ function draw() {
   if (screen==1) {
       background(R, 0, 0);
       push();
-      fill(255, 0, 0);
-      text('hello', width/2, height/2);
-      pop();
+      stroke(0, 255, 0);
+      strokeWeight(5);
       rect(width/2, height/2, 100, 50);
+      pop();
 
+      push();
+      fill(R, 0, 0);
+      noStroke();
+      text('Enter', width/2, height/2+10);
+      pop();
   }
   
   else if (screen==2) {
