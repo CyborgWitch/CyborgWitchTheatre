@@ -22,9 +22,7 @@ var colourY;
 var R;
 
 var l1 = 'Fiends, deviants, mysteries, wretched ones,\nEnter softly into the Cyborg Witch Theatre.\nParse into the dimension of thresholds\ninbetween flesh and screen, input and output';
-
 var l2 = 'This theatre is for\nReimagining recasting recalibrating.\nOur stories, our bodies, our words.\nLet us gather in the woods of the web.';
-
 var l3 = 'We call forth our code into this space and stage.\nWe invite them to occupy and hold intersections.\nIntersections of the Cyborg and the Witch.\nIntersections of gender, race, sexuality.';
 
 //assets
