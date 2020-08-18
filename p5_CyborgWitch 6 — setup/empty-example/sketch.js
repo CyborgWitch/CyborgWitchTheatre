@@ -75,12 +75,13 @@ function draw() {
       strokeWeight(5);
       rect(width/2, height/2, 100, 50);
       pop();
-
+      
       push();
       fill(R, 0, 0);
       noStroke();
       text('Enter', width/2, height/2+10);
       pop();
+      
   }
   
   else if (screen==2) {
@@ -133,11 +134,7 @@ function draw() {
 function mousePressed() {
     
   if (screen==1) {
-    //draw first screen
-
-        screen = screen + 1;
-
-   
+       screen = screen + 1;
   }
   
   else if (screen==2) {
