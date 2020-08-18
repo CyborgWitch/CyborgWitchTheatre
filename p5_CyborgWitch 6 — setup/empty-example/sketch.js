@@ -71,7 +71,7 @@ function draw() {
       fill(0, colourX, colourY);
     
   if (screen==1) {
-      background(R, 0, 0);
+      background(R, R, 0);
       push();
       stroke(0, 255, 0);
       strokeWeight(5);
@@ -83,7 +83,6 @@ function draw() {
       noStroke();
       text('Enter', width/2, height/2+10);
       pop();
-
   }
   
   else if (screen==2) {
