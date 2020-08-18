@@ -134,9 +134,8 @@ function draw() {
 function mousePressed() {
     
   if (screen==1) {
-    if (670 < mouseX > 770 && 425 < mouseY > 475) {
-        screen = screen + 1;
-      }  
+      screen = screen + 1;
+   
   }
   
   else if (screen==2) {
