@@ -140,7 +140,7 @@ function draw() {
     push();
     fill(255, 0, 255);
     rect(240, -400, 360, 300);
-    textFont(droulers);
+    textFont(trickster);
     textAlign(LEFT);
     textSize(48);
     
