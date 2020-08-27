@@ -24,7 +24,7 @@ let continuous = true;
 let interim = false;
 let incantation = '';
 
-let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', '\n// The broken drink\n// of our young day\n// Wild fields rising\n// Summer is waking\n// Rain Dance\n// the bodies', '// Mouth is in the edge\n// In the incense\n// The butterfly is double\n// The mouth is in the fate\n// There is no love, no love\n// A flower blooms', '// Listen to gold\n// We swim in flowers\n// Peach leaves with love\n// Our joyous meeting\n// Poems do not understand\n// Do not listen', '// Oblique season\n// of wind and rain\n// It loves in its way\n// Love puppets\n// from it in the moon'];
+let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', '\n// The broken drink\n// of our young day\n// Wild fields rising\n// Drifting, leaves falling\n// sometimes fragrant\n// Summer is waking\n// Rain Dance the bodies', '// Mouth is in the edge\n// In the incense\n// The butterfly is double\n// The mouth is in the fate\n// There is no love,no love\n// A flower blooms', '// Listen to gold\n// We swim in flowers\n// Peach leaves with love\n// Our joyous meeting\n// Poems do not understand\n// Do not listen', '// Oblique season\n// of wind and rain\n// It loves in its way\n// Love puppets\n// from it the moon\n// Cloud in a day'];
 
 let choosePoem = '';
 
@@ -139,21 +139,21 @@ function draw() {
     
     push();
     fill(255, 0, 255);
-    rect(240, -400, 360, 300);
-    textFont(trickster);
+    rect(240, -400, 370, 290);
+    textFont(droulers);
     textAlign(LEFT);
     textSize(48);
     
         push();
         fill(0, 255, 100);
-        text('Script', 260, -370);
-        textSize(18);
-        textLeading(20);
-        text(choosePoem, 260, -240);
+        text('Script', 250, -370);
+        textSize(20);
+        textLeading(22);
+        text(choosePoem, 250, -240);
         pop();
     
     pop();
-
+    
     //cyborg witch theatre
     push();
     
