@@ -7,8 +7,10 @@ var G;
 
 var l1 = ' 1 //Fiends, mysteries, wretched ones,\n 2 //Enter, this Cyborg Witch Theatre.\n 3 //Parse the thresholds in-between\n 4 //Flesh and screen, input and output';
 var l2 = ' 5 //\n 6 //Code walls, witch speak\n 7 //Setup and draw our bodies\n 8 //Into a cyborg witch becoming.\n 9 //Into the wilds of the web.';
-var l3 = '10 //\n11 //We call forth this stage.\n12 //Where dimensions multiply\n13 //Becoming becomes viral.\n14 //Gender x race x sexuality';
+var l3 = '10 //\n11 //We call forth this stage.\n12 //Where possibilities multiply\n13 //Becoming becomes viral.\n14 //Gender x race x sexuality';
 
+var l4 = '15\n16\n17 incantation setup(CyborgWitchTheatre) {\n18\n19   dimensions.multiply();\n20   intersection(Cyborg*Witch);\n21   intersection(ofTheBody);\n22   intersection.declare(queerChineseAustralianWoman);\n23\n24 }';
+var l5 = '25\n26 incantation draw(intersections) {\n27\n28   perspective(gridPlane);\n29   stage.set(2);\n30   stage.scenes(2);\n31\n32   let user = CyborgWitch;\n33\n34   user.pronouns(‘ ’);\n35   user.body(engage);\n36   user.voice(speak);\n37   user.gesture(create);\n38   user.enter(softly);\n39\n40 }\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50';
 //assets
 var droulers;
 var trickster;
@@ -49,7 +51,7 @@ function voiceReady() {
 
 function setup() {
   // put setup code here
-    createCanvas(1440, 900);
+    createCanvas(1440, 1200);
     background(0);
     
     textFont(droulers);
@@ -80,7 +82,7 @@ function draw() {
   
   else if (screen==2) {
       background(0, G, 0);
-      text(l1, 100, 50);
+      text(l1, 50, 50);
 
 /*      crrnt1 = fiend.currentTime();
       print(crrnt1);*/
@@ -95,8 +97,8 @@ function draw() {
   
   else if (screen==3) {
       background(0, G, 0);
-      text(l1, 100, 50);
-      text(l2, 100, 146);
+      text(l1, 50, 50);
+      text(l2, 50, 146);
       
 /*      crrnt2 = theatre.duration();
       print(crrnt2);*/
@@ -111,9 +113,10 @@ function draw() {
   
   else if (screen==4) {
       background(0, G, 0);
-      text(l1, 100, 50);
-      text(l2, 100, 146);
-      text(l3, 100, 266);
+      
+      text(l1, 50, 50);
+      text(l2, 50, 146);
+      text(l3, 50, 266);
       
 /*      crrnt3 = codeForth.currentTime();
       print(crrnt3);*/
@@ -152,11 +155,22 @@ function draw() {
   
   else if (screen==5) {
       background(0, G, 0);
+      
+      text(l1, 50, 50);
+      text(l2, 50, 146);
+      text(l3, 50, 266);
+      text(l4, 50, 386);
   }
     
   else if (screen==6) {
       background(0, G, 0);
-
+      
+      text(l1, 50, 50);
+      text(l2, 50, 146);
+      text(l3, 50, 266);
+      text(l4, 50, 386);
+      text(l5, 50, 626);
+      
   }  
 }
 
