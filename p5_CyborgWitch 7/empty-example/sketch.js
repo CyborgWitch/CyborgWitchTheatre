@@ -13,6 +13,7 @@ var l4 = '\n19\n20 incantation setup(CyborgWitchTheatre) {\n21\n22   dimensions.
 var l5 = '28\n29 incantation draw(intersections) {\n30\n31   perspective(gridPlane);\n32   stage.set(2);\n33   stage.scenes(2);\n34\n\n\n\n\n\n40\n41 }\n';
 
 
+
 //assets
 var droulers;
 var trickster;
@@ -40,8 +41,8 @@ var keyEnter = 0;
 
 //incantation enact
 var grid = false;
-var codeOut = 0;
-
+var codeOut = -1;
+var opacity = 0;
 
 function preload() {
     droulers = loadFont('assets/Droulers_TEST-Regular.otf');
@@ -184,7 +185,7 @@ function draw() {
       text('16 let user = CyborgWitch;', 50, 50);
       text('17 input your CyborgWitch username', 50, 74);
       text('18 Welcome,', 50, 98);
-      text(userName, 205, 98);
+      text(userName + ';', 205, 98);
 
   }  
 
@@ -194,7 +195,7 @@ function draw() {
       text('16 let user = CyborgWitch;', 50, 50);
       text('17 input your CyborgWitch username', 50, 74);
       text('18 Welcome,', 50, 98);
-      text(userName, 205, 98);
+      text(userName + ';', 205, 98);
       text(l4, 50, 98);
       
   }
@@ -206,7 +207,7 @@ function draw() {
       text('16 let user = CyborgWitch;', 50, 50);
       text('17 input your CyborgWitch username', 50, 74);
       text('18 Welcome,', 50, 98);
-      text(userName, 205, 98);
+      text(userName + ';', 205, 98);
       text(l4, 50, 98);
       text(l5, 50, 338);
       
@@ -225,7 +226,7 @@ function draw() {
       text('16 let user = CyborgWitch;', 50, 50+codeOut);
       text('17 input your CyborgWitch username', 50, 74+codeOut);
       text('18 Welcome,', 50, 98+codeOut);
-      text(userName, 205, 98+codeOut);
+      text(userName + ';', 205, 98+codeOut);
       text(l4, 50, 98+codeOut);
       text(l5, 50, 338+codeOut);
       
@@ -235,10 +236,19 @@ function draw() {
       text('38   ' + userName + '.gesture(create);', 50, 578+codeOut);
       text('39   ' + userName + '.enter(softly);', 50, 602+codeOut);
       
-    //alternate isometric grid  
-      push();
+
+  if (codeOut >= -400) {
+      codeOut = codeOut * 1.02;
+      print(codeOut);
+  } else {
+        codeOut = codeOut * 1.02;
+        print(codeOut);
+        opacity = opacity + 1;
+      //alternate isometric grid  
+        
+        push();
         translate(width/2, height/2);
-        stroke(255, 0, 0);
+        stroke(255, 0, 0, opacity);
         strokeWeight(0.5);
         
             push();
@@ -263,13 +273,6 @@ function draw() {
             pop();
        
       pop();
-
-  if (codeOut <= 630) {
-      codeOut = codeOut - 2;
-      print(codeOut);
-  } else {
-        codeOut = 631;
-        print(codeOut);
     }
 }
 }
@@ -326,14 +329,17 @@ function mousePressed() {
   }
     
   else if (screen==7) {
-        screen = screen + 1;
+    screen = screen + 1;
   }
     
   else if (screen==8) {
-      screen = screen + 1;
+    screen = screen + 1;
   }
 
   else if (screen==9) {
+    if (codeOut < -1000) {
+        screen = screen + 1;
+    }
   }
     
 //if (screen > numberOfPages){
@@ -349,4 +355,6 @@ function keyPressed() {
         print(userEnter);
     } 
 }
+    
+    
    
