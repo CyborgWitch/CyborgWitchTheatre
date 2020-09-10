@@ -1,4 +1,4 @@
-var screen = 5;
+var screen = 1;
 var numberOfPages = 9;
 
 var colourX = 255;
