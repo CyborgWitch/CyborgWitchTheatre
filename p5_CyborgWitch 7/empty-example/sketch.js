@@ -1,4 +1,4 @@
-var screen = 1;
+var screen = 5;
 var numberOfPages = 9;
 
 var colourX = 255;
@@ -12,7 +12,13 @@ var l3 = '10 //\n11 //We call forth this stage.\n12 //Where possibilities multip
 var l4 = '\n19\n20 incantation setup(CyborgWitchTheatre) {\n21\n22   dimensions.multiply();\n23   intersection(Cyborg*Witch);\n24   intersection(ofTheBody);\n25   intersection.declare(queerChineseAustralianWoman);\n26\n27 }';
 var l5 = '28\n29 incantation draw(intersections) {\n30\n31   perspective(gridPlane);\n32   stage.set(2);\n33   stage.scenes(2);\n34\n\n\n\n\n\n40\n41 }\n';
 
-
+//mouseSparkle
+let totalPoints = 5;
+let angle = 0;
+let rInside  = 15;
+let rOutside = 25;
+var x1, y1;
+var x2, y2;
 
 //assets
 var droulers;
@@ -89,6 +95,7 @@ function draw() {
       
       fill(colourX, 0, 0);
     
+
   if (screen==1) {
       background(0, G, 0);
     
@@ -97,7 +104,13 @@ function draw() {
       textLeading(150);
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
-
+      
+      push();
+      stroke(255, 0, 0);
+      line(0, height/6+10, width, height/6+10);
+      line(0, height/3+10, width, height/3+10);
+      pop();
+      
   }
   
   else if (screen==2) {
@@ -107,6 +120,12 @@ function draw() {
       textLeading(150);
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
+      
+      push();
+      stroke(255, 0, 0);
+      line(0, height/6+10, width, height/6+10);
+      line(0, height/3+10, width, height/3+10);
+      pop();
       
       crrnt1 = fiend.currentTime();
       print(crrnt1);
@@ -118,6 +137,7 @@ function draw() {
         fiend.play();
         reverb.process(fiend, 10, 5);
     } 
+      
   }
   
   else if (screen==3) {
@@ -127,6 +147,12 @@ function draw() {
       textLeading(150);
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
+      
+      push();
+      stroke(255, 0, 0);
+      line(0, height/6+10, width, height/6+10);
+      line(0, height/3+10, width, height/3+10);
+      pop();
       
       crrnt2 = theatre.currentTime();
       print(crrnt2);
@@ -150,6 +176,12 @@ function draw() {
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
       
+      push();
+      stroke(255, 0, 0);
+      line(0, height/6+10, width, height/6+10);
+      line(0, height/3+10, width, height/3+10);
+      pop();
+      
       crrnt3 = codeForth.currentTime();
       print(crrnt3);
       
@@ -172,7 +204,7 @@ function draw() {
       
       //username    
       userInput = createInput();
-      userInput.position(520, 56+codeOut);
+      userInput.position(520, 57+codeOut);
       userInput.changed(newText);
 
   }
@@ -191,6 +223,8 @@ function draw() {
 
   else if (screen==7) {
       background(0, G, 0);
+      userInput.changed(newText);
+
                   
       text('16 let user = CyborgWitch;', 50, 50);
       text('17 input your CyborgWitch username', 50, 74);
@@ -230,22 +264,23 @@ function draw() {
       text(l4, 50, 98+codeOut);
       text(l5, 50, 338+codeOut);
       
+      userInput.changed(newText);
+      userInput.position(520, 57+codeOut);
+      
       text('35   ' + userName + '.pronouns();', 50, 506+codeOut);
       text('36   ' + userName + '.body(engage);', 50, 530+codeOut);
       text('37   ' + userName + '.voice(speak);', 50, 554+codeOut);
       text('38   ' + userName + '.gesture(create);', 50, 578+codeOut);
       text('39   ' + userName + '.enter(softly);', 50, 602+codeOut);
       
+      codeOut = codeOut * 1.03;
 
-  if (codeOut >= -400) {
-      codeOut = codeOut * 1.02;
-      print(codeOut);
-  } else {
-        codeOut = codeOut * 1.02;
-        print(codeOut);
+  if (codeOut <= -100) {
+
+        userInput.remove();
         opacity = opacity + 1;
-      //alternate isometric grid  
-        
+      
+      //alternate isometric grid    
         push();
         translate(width/2, height/2);
         stroke(255, 0, 0, opacity);
@@ -278,12 +313,16 @@ function draw() {
 }
 
 function newText() {
+    //userInput.changed(newText+codeOut);
     userName = userInput.value();
     console.log(userName);
-
+    //userInput.remove();
+    //userInput.position(520, 57+codeOut);
+    
 }
 
 function mousePressed() {
+    
     
   if (screen==1) {
       screen = screen + 1
@@ -338,7 +377,7 @@ function mousePressed() {
 
   else if (screen==9) {
     if (codeOut < -1000) {
-        screen = screen + 1;
+        codeOut = -999
     }
   }
     
@@ -356,5 +395,6 @@ function keyPressed() {
     } 
 }
     
+     
     
    
