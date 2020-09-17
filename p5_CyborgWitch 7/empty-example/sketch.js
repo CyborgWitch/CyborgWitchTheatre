@@ -13,8 +13,9 @@ var l4 = '\n19\n20 incantation setup(CyborgWitchTheatre) {\n21\n22   dimensions.
 var l5 = '28\n29 incantation draw(intersections) {\n30\n31   perspective(gridPlane);\n32   stage.set(2);\n33   stage.scenes(2);\n34\n\n\n\n\n\n40\n41 }\n';
 
 //mouseSparkle
-let totalPoints = 5;
+let totalPoints = 7;
 let angle = 0;
+let gap = 360/totalPoints;
 let rInside  = 15;
 let rOutside = 25;
 var x1, y1;
@@ -33,9 +34,6 @@ var theatreIsPlaying = false;
 var codeForthIsPlaying = false;
 
 let reverb;
-
-var crrnt1, crrnt2, crrnt3;
-
 //var speech = new p5.Speech(voiceReady);
 
 // USERNAME !!!
@@ -85,20 +83,17 @@ function setup() {
     
     reverb = new p5.Reverb();
     
-    //username
-
-        
     }
 
 
 function draw() {
       
-      fill(colourX, 0, 0);
-    
+  fill(colourX, 0, 0);
 
   if (screen==1) {
       background(0, G, 0);
-    
+      mouseSparkle();
+
       push();
       textSize(163);
       textLeading(150);
@@ -110,94 +105,81 @@ function draw() {
       line(0, height/6+10, width, height/6+10);
       line(0, height/3+10, width, height/3+10);
       pop();
-      
+//      
   }
   
   else if (screen==2) {
       background(0, G, 0);
+      mouseSparkle();
+
+      //TEXT
       push();
       textSize(163);
       textLeading(150);
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
       
+      text(l1, 50, 552);
+
       push();
       stroke(255, 0, 0);
       line(0, height/6+10, width, height/6+10);
       line(0, height/3+10, width, height/3+10);
       pop();
-      
-      crrnt1 = fiend.currentTime();
-      print(crrnt1);
-      
-      text(l1, 50, 552);
-      
-    if (fiendIsPlaying == false) {
-        fiendIsPlaying = true;
-        fiend.play();
-        reverb.process(fiend, 10, 5);
-    } 
-      
   }
   
   else if (screen==3) {
       background(0, G, 0);
+      mouseSparkle();
+
+      
+      //TEXT
       push();
       textSize(163);
       textLeading(150);
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
       
+      text(l1, 50, 552);
+      text(l2, 50, 648);
+      
       push();
       stroke(255, 0, 0);
       line(0, height/6+10, width, height/6+10);
       line(0, height/3+10, width, height/3+10);
       pop();
-      
-      crrnt2 = theatre.currentTime();
-      print(crrnt2);
-      
-      text(l1, 50, 552);
-      text(l2, 50, 648);
-      
-    if (theatreIsPlaying == false) {
-        theatreIsPlaying = true;
-        theatre.play();
-        reverb.process(theatre, 10, 5);
-    }   
+
     
   }
   
   else if (screen==4) {
       background(0, G, 0);
+      mouseSparkle();
+
+      
+      //TEXT
       push();
       textSize(163);
       textLeading(150);
       text('Cyborg Witch\nTheatre', 50, 130);
       pop(); 
       
+      text(l1, 50, 552);
+      text(l2, 50, 648);
+      text(l3, 50, 768);
+      
       push();
       stroke(255, 0, 0);
       line(0, height/6+10, width, height/6+10);
       line(0, height/3+10, width, height/3+10);
       pop();
-      
-      crrnt3 = codeForth.currentTime();
-      print(crrnt3);
-      
-      text(l1, 50, 552);
-      text(l2, 50, 648);
-      text(l3, 50, 768);
-      
-    if (codeForthIsPlaying == false) {
-        codeForthIsPlaying = true;
-        codeForth.play();
-        reverb.process(codeForth, 10, 5);
-    }
+
   }
   
   else if (screen==5) {
       background(0, G, 0);
+      mouseSparkle();
+
             
       text('16 let user = CyborgWitch;', 50, 50);
       text('17 input your CyborgWitch username', 50, 74);
@@ -211,6 +193,8 @@ function draw() {
     
   else if (screen==6) {
       background(0, G, 0);
+      mouseSparkle();
+
       userInput.changed(newText);
 
       
@@ -223,6 +207,8 @@ function draw() {
 
   else if (screen==7) {
       background(0, G, 0);
+      mouseSparkle();
+
       userInput.changed(newText);
 
                   
@@ -236,6 +222,8 @@ function draw() {
     
   else if (screen==8) {
       background(0, G, 0);
+      mouseSparkle();
+
       userInput.changed(newText);
 
       text('16 let user = CyborgWitch;', 50, 50);
@@ -255,6 +243,7 @@ function draw() {
     
   else if (screen==9) {
       background(0, G, 0);
+      mouseSparkle();
 
                   
       text('16 let user = CyborgWitch;', 50, 50+codeOut);
@@ -326,13 +315,27 @@ function mousePressed() {
     
   if (screen==1) {
       screen = screen + 1
+        
+      //start playing FIEND
+      fiendIsPlaying = true;
+      fiend.play();
+      reverb.process(fiend, 10, 5);
+ 
   }
   
   else if (screen==2) {
      
-    if (fiend.currentTime() >= 13.5) {
+    //if FIEND is past (actual value 13.5), stop FIEND
+    if (!fiend.isPlaying()) {
+        //fiend.stop();
         fiendIsPlaying = false;
         console.log(fiendIsPlaying);
+        
+        //play THEATRE
+        theatreIsPlaying = true;
+        theatre.play();
+        reverb.process(theatre, 10, 5); 
+        
         screen = screen + 1;
     }
 
@@ -340,18 +343,26 @@ function mousePressed() {
   
   else if (screen==3) {
       
-    if (theatre.currentTime() >= 12.5) {
+    //if THEATRE is past (actual value 12.5), stop THEATRE
+    if (!theatre.isPlaying()) {
         theatreIsPlaying = false;
         console.log(theatreIsPlaying);
+              
+        codeForth.play();
+        codeForthIsPlaying = true;
+        reverb.process(codeForth, 10, 5);
+        
         screen = screen + 1;
     }
   }
   
   else if (screen==4) {
       
-    if (codeForth.currentTime() >= 12.8) {
+    //if CODEFORTH is past (actual value 12.8), stop CODEFORTH
+    if (!codeForth.isPlaying()) {
         codeForthIsPlaying = false;
         console.log(codeForthIsPlaying);
+        
         screen = screen + 1;
     }
   }
@@ -394,7 +405,29 @@ function keyPressed() {
         print(userEnter);
     } 
 }
+
+function mouseSparkle() {
     
-     
+    if (mouseIsPressed) {
+        push();
+        stroke(255, 0, 0);
+        fill(255, 0, 0);
+        translate(mouseX+2,mouseY+4);
+
+        for (let i = 0; i < totalPoints; i++) {
+            angle = i*gap
+      
+            x1 = rInside*cos(angle);
+            y1 = rInside*sin(angle);
+            x2 = rOutside*cos(angle);
+            y2 = rOutside*sin(angle);
     
-   
+            line(x1, y1, x2, y2);
+        }
+  pop();
+        
+    }
+    
+}
+    
+    
