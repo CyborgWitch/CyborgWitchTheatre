@@ -19,7 +19,7 @@ var liveCyborgWitch;
 var speechBubble;
 
 //variables to float in scene
-var cloudMove = -620;      
+var cloudMove = -600;      
 var altarMove = -1300;
 var ouijaMove = -1000;
 
@@ -204,18 +204,18 @@ function draw() {
     else if (screen==3) {
         sceneScreens();
 
-        image(speechBubble, -500, 120, 415, 300);
+        image(speechBubble, -500, 180, 450, 300);
         textFont(droulers);
         textAlign(LEFT);
         textSize(42);
 
         push();
             fill(0, 0, 255);
-            text('Script', -660, 20);
+            text('Script', -680, 105);
 
             textSize(20);
             textLeading(22);
-            text(choosePoem, -660, 115);
+            text(choosePoem, -680, 205);
         pop();
     
     
@@ -225,18 +225,18 @@ function draw() {
         sceneScreens();
         
     
-        image(speechBubble, -500, 120, 415, 300);
+        image(speechBubble, -500, 180, 450, 300);
         textFont(droulers);
         textAlign(LEFT);
         textSize(42);
 
         push();
             fill(0, 0, 255);
-            text('Script', -660, 50);
+            text('Script', -680, 105);
 
             textSize(20);
             textLeading(22);
-            text(choosePoem, -660, 145);
+            text(choosePoem, -680, 205);
         pop();
     
     // speechRec PRINT to stage   
@@ -280,20 +280,9 @@ function sceneScreens () {
             rotateX(30);
             rotateY(-49);
             fill(255, 0, 255, 180);
-            //rect(-535, 60, 620, 350);
-            image(liveCyborgWitch, -495, -410, 380, 220);
+            image(liveCyborgWitch, -495, -460, 380, 180);
         pop();
         
-        //webcam as floor
-//        push();
-//            rotateX(236);
-//            rotateZ(136);
-//        
-//            image(liveCyborgWitch, -385, 405, 1000, 585);
-//            fill(255, 0, 255, 200);
-//            rect(-385, 405, 1000, 585);
-//
-//        pop();  
     }
     
     push();
@@ -343,4 +332,5 @@ function mousePressed() {
 
     
 }
+
 
