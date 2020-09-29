@@ -111,8 +111,8 @@ function preload() {
     erhu = loadSound('assets/erhuDistorted.mp3');
     
     daluo = loadSound('assets/daluo.mp3');
-    bangu = loadSound('assets/bangu.mp3');
-    naobo = loadSound('assets/naobo.mp3');
+    bangu = loadSound('assets/Bangu.mp3');
+    naobo = loadSound('assets/Naobo.mp3');
 
     
     hand = loadModel('assets/hand-free.obj');
@@ -158,17 +158,17 @@ function windowResized() {
     setDimensions();
     resizeCanvas(width, height);
     
-    createCanvas(width, height, WEBGL);
-    ortho(-width/2, width/2,-height/2, height/2);
-    background(0, 255, 0);
-
-    imageMode(CENTER);
-    angleMode(DEGREES);
-    rectMode(CENTER);
-    
-    textSize(96);
-    textAlign(LEFT, CENTER);
-    textFont(droulers);
+//    createCanvas(width, height, WEBGL);
+//    ortho(-width/2, width/2,-height/2, height/2);
+//    background(0, 255, 0);
+//
+//    imageMode(CENTER);
+//    angleMode(DEGREES);
+//    rectMode(CENTER);
+//    
+//    textSize(96);
+//    textAlign(LEFT, CENTER);
+//    textFont(droulers);
 
 }
 function setDimensions() {
