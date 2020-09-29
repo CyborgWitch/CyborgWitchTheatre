@@ -7,6 +7,7 @@ var numberOfPages = 6;
 var trickster;
 var solide;
 var droulers;
+var droulersItalic;
 
 // printing speechRec text positions
 var textX = 0;
@@ -24,13 +25,16 @@ var cloudMove = -600;
 var altarMove = -1300;
 var ouijaMove = -1000;
 
+var cloudOut, altarOut, ouijaOut;
+
 // SOUND EFFECTS—FILES
 var cyborgWitchXYZ;
 var cyborgWitchXYZplayed = 0;
 var thud1; 
 var thud2; 
 var thud3; 
-
+var endCyborgWitchXYZ;
+var endCyborgWitchXYZ_COUNT = 0;
 //not currently used
 //var angle = 0;
 
@@ -54,7 +58,8 @@ let choosePoem = '';
 function preload() {
     trickster = loadFont('assets/Trickster-Reg.otf');
     solide = loadFont('assets/Solide.otf');
-    droulers = loadFont('assets/Droulers_TEST-Italic.otf');
+    droulers = loadFont('assets/Droulers-Regular.otf');
+    droulersItalic = loadFont('assets/Droulers-Italic.otf');
     
     cloudDiscotheque = loadImage('assets/CodeDiscotheque2 copy.jpg');
     ouijaBoard = loadImage('assets/Poetry_sideStage.png');
@@ -63,6 +68,8 @@ function preload() {
     
     // beginning poem
     cyborgWitchXYZ = loadSound('assets/CyborgWitch_scenes Mixdown 2.mp3');
+    // end poem
+    endCyborgWitchXYZ = loadSound('assets/CyborgWitch_scenes2 Mixdown 1.mp3');
     
     // image sound effects
     thud1 = loadSound('assets/whoop__ui-back-sound.mp3');
@@ -267,16 +274,19 @@ function draw() {
         button = createButton('Stage 2');
         button.position(19, 19);
         button.mousePressed(Stage2);
+        
     }
     
   
     else if (screen==6) {
-
-
+        sceneScreens();
+        if (endCyborgWitchXYZ_COUNT==1 && !endCyborgWitchXYZ.isPlaying() && cloudMove < -800 && altarMove < 1300 && ouijaMove < 1000) {
+            //if () endCyborgWitch is not playing and has played once, and all the screens are out of frame, replace the URL. 
+            window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_CyborgWitch%209%202/empty-example/");
+        }
     }
     
     else if (screen==7) {
-
     }  
 }
 
@@ -295,7 +305,7 @@ function sceneScreens () {
         push();
             rotateX(30);
             rotateY(-49);
-            image(liveCyborgWitch, -495, -460, 380, 180);
+            image(liveCyborgWitch, -495, -460+ouijaMove, 380, 180);
         pop();
         
         }
@@ -307,7 +317,12 @@ function sceneScreens () {
         image(altar2Intersections, 525, 540+altarMove, 620, 585);
     pop();
     
-
+    if (screen==6) {
+        print('hello we r trying to float');
+        cloudMove = cloudMove - 0.75;
+        altarMove = altarMove - 2;
+        ouijaMove = ouijaMove - 1;
+    }
 
 }
 
@@ -341,12 +356,12 @@ function mousePressed() {
     }
   
     else if (screen==6) {
-        screen = screen + 1;
+        //screen = screen + 1;
 
     }
 
     else if (screen==7) {
-        screen = screen + 1;
+        //screen = screen + 1;
 
     }  
 
@@ -354,7 +369,12 @@ function mousePressed() {
 }
 
 function Stage2() {
-    window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_CyborgWitch%209/empty-example/");
+    
+    screen = 6;
+    
+    if (endCyborgWitchXYZ_COUNT==0 && !endCyborgWitchXYZ.isPlaying()) {
+        endCyborgWitchXYZ.play();
+        endCyborgWitchXYZ_COUNT = 1;
+    }
+    
 }
-
-
