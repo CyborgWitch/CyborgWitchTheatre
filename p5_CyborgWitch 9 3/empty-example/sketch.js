@@ -7,7 +7,7 @@
 ml5 Example
 PoseNet example using p5.js
 === */
-var screen = 1;
+var screen = 2;
 var numberOfPages = 5;
 
 // resizing window size
@@ -33,7 +33,7 @@ let backdrop;
 let stage1, stage2;
 
 //float in screens variables
-let backdropMove = -600;
+let backdropMove = -999;
 let stage1Move = -1300;
 let stage2Move = -1000;
 
@@ -122,12 +122,9 @@ function preload() {
 function setup() {
   setDimensions();
   createCanvas(width, height, WEBGL);
-    
-  //Clipping plane not specified (default?) where i think it sets the clipping plane in porportion to the window size. 
-  ortho(-width/2, width/2,-height/2, height/2);
-  //The clipping plane as defined by (width*, -height) below shows all the images, but don't layer in the correct order. 
-  //ortho(-width/2, width/2, -height/2, height/2, width*2, -height);
-  
+  //ortho — near and far planes going from negative to positive. 
+  ortho(-width/2, width/2, -height/2, height/2, -width*2, width*2);
+
   background(0, 255, 0);
   video = createCapture(VIDEO);
   video.hide();
@@ -157,18 +154,18 @@ function setup() {
 function windowResized() {
     setDimensions();
     resizeCanvas(width, height);
+    createCanvas(width, height, WEBGL);
+    ortho(-width/2, width/2,-height/2, height/2, -width*2, width*2);
+
+    background(0, 255, 0);
+
+    imageMode(CENTER);
+    angleMode(DEGREES);
+    rectMode(CENTER);
     
-//    createCanvas(width, height, WEBGL);
-//    ortho(-width/2, width/2,-height/2, height/2);
-//    background(0, 255, 0);
-//
-//    imageMode(CENTER);
-//    angleMode(DEGREES);
-//    rectMode(CENTER);
-//    
-//    textSize(96);
-//    textAlign(LEFT, CENTER);
-//    textFont(droulers);
+    textSize(96);
+    textAlign(LEFT, CENTER);
+    textFont(droulers);
 
 }
 function setDimensions() {
@@ -182,7 +179,6 @@ function modelReady() {
 
 
 function draw() {
-    
     background(0, 255, 50);
     noFill();
     stroke(255, 0, 0);
@@ -223,7 +219,7 @@ function draw() {
         push();
             fill(255, 0, 0);
             textLeading(84);
-            text('Enter Stage 2,\n' + userName, -700, -320);
+            text('Enter Stage 2,\n' + userName, -700, -360);
         pop();
     }
     
@@ -232,7 +228,7 @@ function draw() {
         push();
             fill(255, 0, 0);
             textLeading(84);
-            text('Enter Stage 2,\n' + userName, -700, -320);
+            text('Enter Stage 2,\n' + userName, -700, -360);
         pop();
         
         stageScreens();
@@ -308,31 +304,32 @@ function draw() {
         
     }
     
-    
-
 }
 
 function stageScreens() {
     // backdrop (main image)
     push();
         rotateX(30);
-        rotateY(49);
-        image(backdrop, 295, -185+backdropMove, 1080, 585);
+        rotateY(49.1);
+        image(backdrop, 305, -187+backdropMove, 1100, 586);
     pop();    
 
     // Side screens and webcam
     push();
-    rotateX(30);
-    rotateY(-49);
+        rotateX(30);
+        rotateY(-49);
         // webcam popup
         if (screen==3 || screen ==4) {
-            image(video, -495, -460, 380, 180);
+            image(video, -520, -440, 300, 180);
         }
-
-    image(stage2, -535, -399+stage2Move, 620, 585);
-    image(stage1, 550, 550+stage1Move, 620, 585);
+    image(stage2, -549, -399+stage2Move, 610, 586);
     pop();
     
+    push();
+        rotateX(30);
+        rotateY(-49);
+        image(stage1, 549, 559+stage1Move, 610, 586);
+    pop();
 }
 
 
@@ -441,7 +438,6 @@ push();
       //if hands are "TOGETHER", turn on orchid and music with handsON
       if (distanceHands <= 50) {
           handsTogether = true;
-          //print(handsTogether);
           handsOn = handsOn + 1;
       } else {
           handsTogether = false;
@@ -450,7 +446,7 @@ push();
           if (handsOn > 1) {
               soundMapped = map(soundLevel, 0, 0.3, 100, 255);
               push();
-                  translate(width/2, 600);
+                  translate(width/2, 800);
                   rotateY(angle);
                   rotateX(-90);
                   scale(orchidSize);
