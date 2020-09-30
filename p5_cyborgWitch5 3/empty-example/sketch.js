@@ -14,18 +14,18 @@ var textX = 0;
 var textY = 0;
 
 // IMAGE SCREENS
-var cloudDiscotheque;
-var altar2Intersections;
-var ouijaBoard;
+var backdrop;
+var stage1;
+var stage2;
 var liveCyborgWitch;
 var speechBubble;
 
 //variables to float in scene
-var cloudMove = -600;      
-var altarMove = -1300;
-var ouijaMove = -1000;
+var backdropMove = -999;      
+var stage1Move = -1300;
+var stage2Move = -1000;
 
-var cloudOut, altarOut, ouijaOut;
+var backdropOut, stage1Out, stage2Out;
 
 // SOUND EFFECTS—FILES
 var cyborgWitchXYZ;
@@ -50,7 +50,16 @@ let interim = false;
 let incantation = '';
 
 // array of poems
-let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', '\n// The broken drink\n// of our young day\n// Wild fields rising\n// Drifting, leaves falling\n// sometimes fragrant\n// Summer is waking\n// Rain Dance the bodies', '// Mouth is in the edge\n// In the incense\n// The butterfly is double\n// The mouth is in the fate\n// There is no love,no love\n// A flower blooms', '// Listen to gold\n// We swim in flowers\n// Peach leaves with love\n// Our joyous meeting\n// Poems do not understand\n// Do not listen', '// Oblique season\n// of wind and rain\n// It loves in its way\n// Love puppets\n// from it the moon\n// Cloud in a day'];
+let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', 
+
+             '\n// The broken drink\n// of our young day\n// Wild fields rising\n// Drifting, leaves falling\n// sometimes fragrant\n// Summer is waking\n// Rain Dance the bodies', 
+
+             '// Mouth is in the edge\n// In the incense\n// The butterfly is double\n// The mouth is in the fate\n// There is no love,no love\n// A flower blooms', 
+             
+             '// Listen to gold\n// We swim in flowers\n// Peach leaves with love\n// Our joyous meeting\n// Poems do not understand\n// Do not listen', 
+             
+             '// Oblique season\n// of wind and rain\n// It loves in its way\n// Love puppets\n// from it the moon\n// Cloud in a day'];
+
 let choosePoem = '';
 
 
@@ -61,9 +70,9 @@ function preload() {
     droulers = loadFont('assets/Droulers-Regular.otf');
     droulersItalic = loadFont('assets/Droulers-Italic.otf');
     
-    cloudDiscotheque = loadImage('assets/CodeDiscotheque2 copy.jpg');
-    ouijaBoard = loadImage('assets/Poetry_sideStage.png');
-    altar2Intersections = loadImage('assets/Poetry_sideStage2.jpg');
+    backdrop = loadImage('assets/CodeDiscotheque2 copy.jpg');
+    stage2 = loadImage('assets/Poetry_sideStage.png');
+    stage1 = loadImage('assets/Poetry_sideStage2.jpg');
     speechBubble= loadImage('assets/speechBubble.png');
     
     // beginning poem
@@ -91,25 +100,20 @@ function gotSpeech() {
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight, WEBGL);
-    // previous window dimensions
-    //createCanvas(1440, 900, WEBGL);
-    
-    //Clipping plane not specified (default?) where i think it sets the clipping plane in porportion to the window size. 
-    ortho(-width/2, width/2,-height/2, height/2);
-    //The clipping plane as defined by (width*, -height) below shows all the images, but don't layer in the correct order. 
-    //ortho(-width/2, width/2, -height/2, height/2, width*2, -height);
-
-    background(0, 255, 75);
+  setDimensions();
+  createCanvas(width, height, WEBGL);
+  // ortho with near-far of the clipping plane going from negative to positive
+  ortho(-width/2, width/2,-height/2, height/2, -width*2, width*2);
+  background(0, 255, 75);
     
     // webcam
     liveCyborgWitch = createCapture(VIDEO);
     liveCyborgWitch.hide();
     
-    textFont(trickster);
+    textFont(droulers);
     textSize(96);
-    textAlign(CENTER, CENTER);
-    translate(720, 450);
+    textAlign(LEFT, CENTER);
+
     angleMode(DEGREES);
     imageMode(CENTER);
     rectMode(CENTER);
@@ -128,7 +132,21 @@ function setup() {
 function windowResized() {
     setDimensions();
     resizeCanvas(width, height);
+    
+    createCanvas(width, height, WEBGL);
+    ortho(-width/2, width/2,-height/2, height/2, -width*2, width*2);
+
+    background(0, 255, 0);
+
+    imageMode(CENTER);
+    angleMode(DEGREES);
+    rectMode(CENTER);
+    
+    textFont(droulers);
+    textSize(96);
+    textAlign(LEFT, CENTER);
 }
+
 function setDimensions() {
     width = window.innerWidth;
     height = window.innerHeight;
@@ -165,16 +183,14 @@ function draw() {
         push();
         fill(255, 0, 0);
         textAlign(LEFT, CENTER);
-        textFont(droulers);
-        text('Enter,' + userName, -700, -360);
+        text('Enter,' + userName, -700, -400);
         pop();
     }
     else if (screen==2) {
         push();
         fill(255, 0, 0);
         textAlign(LEFT, CENTER);
-        textFont(droulers);
-        text('Enter,' + userName, -700, -360);
+        text('Enter,' + userName, -700, -400);
         pop();
         
         print(cyborgWitchXYZ.isPlaying());
@@ -185,33 +201,33 @@ function draw() {
         }
         
         //float in sceneScreens, play thud
-        //if cloudMove is one increment before its final position, then it make it = 0, and play thud
-        if (cloudMove == -0.75) {             
-            cloudMove = 0;
+        //if backdropMove is one increment before its final position, then it make it = 0, and play thud
+        if (backdropMove == -0.75) {             
+            backdropMove = 0;
             thud1.play();
             print(thud1.isPlaying());
 
-        } else if (cloudMove < 0) {         // else if cloudMove is still negative, not in position, keep increasing it
-            cloudMove = cloudMove + 0.75;
+        } else if (backdropMove < 0) {         // else if backdropMove is still negative, not in position, keep increasing it
+            backdropMove = backdropMove + 0.75;
         }
-        //if altarMove is one increment before its final position, then it make it = 0, and play thud
-        if (altarMove == -2) {
-            altarMove = 0;
+        //if stage1Move is one increment before its final position, then it make it = 0, and play thud
+        if (stage1Move == -2) {
+            stage1Move = 0;
             thud2.play();
             print(thud2.isPlaying());
 
-        } else if (altarMove < 0){
-            altarMove = altarMove + 2;
+        } else if (stage1Move < 0){
+            stage1Move = stage1Move + 2;
         }
         
-        //if ouijaMove is one increment before its final position, then it make it = 0, and play thud
-        if (ouijaMove == -1) {
-            ouijaMove = 0;
+        //if stage2Move is one increment before its final position, then it make it = 0, and play thud
+        if (stage2Move == -1) {
+            stage2Move = 0;
             thud3.play();
             print(thud3.isPlaying());
 
-        } else if (ouijaMove < 0){
-            ouijaMove = ouijaMove + 1;
+        } else if (stage2Move < 0){
+            stage2Move = stage2Move + 1;
         }
         
         sceneScreens();
@@ -229,7 +245,6 @@ function draw() {
         // speechBubble and poem texts
         image(speechBubble, -500, 180, 450, 300);
         textFont(droulers);
-        textAlign(LEFT);
         textSize(42);
 
         push();
@@ -250,7 +265,6 @@ function draw() {
         // speechBubble and poem text
         image(speechBubble, -500, 180, 450, 300);
         textFont(droulers);
-        textAlign(LEFT);
         textSize(42);
 
         push();
@@ -266,9 +280,10 @@ function draw() {
             rotateX(30);
             rotateY(49);
             textFont(trickster);
+            textAlign(CENTER, CENTER);
             textSize(64);
             fill(255, 0, 255);
-            text(incantation, textX-200, textY+180);
+            text(incantation, textX-100, textY+180);
         pop();
         
         button = createButton('Stage 2');
@@ -280,7 +295,7 @@ function draw() {
   
     else if (screen==6) {
         sceneScreens();
-        if (endCyborgWitchXYZ_COUNT==1 && !endCyborgWitchXYZ.isPlaying() && cloudMove < -800 && altarMove < 1300 && ouijaMove < 1000) {
+        if (endCyborgWitchXYZ_COUNT==1 && !endCyborgWitchXYZ.isPlaying() && backdropMove < -800 && stage1Move < 1300 && stage2Move < 1000) {
             //if () endCyborgWitch is not playing and has played once, and all the screens are out of frame, replace the URL. 
             window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_CyborgWitch%209%202/empty-example/");
         }
@@ -296,8 +311,8 @@ function sceneScreens () {
     // draw main image backdrop
     push();
         rotateX(30);
-        rotateY(49);        
-        image(cloudDiscotheque, 295, -185+cloudMove, 1080, 585);
+        rotateY(49.1);        
+        image(backdrop, 305, -187+backdropMove, 1100, 586);
     pop();
     
         if (screen == 3 || screen == 4 || screen == 5) {
@@ -305,7 +320,7 @@ function sceneScreens () {
         push();
             rotateX(30);
             rotateY(-49);
-            image(liveCyborgWitch, -495, -460+ouijaMove, 380, 180);
+            image(liveCyborgWitch, -520, -440, 380, 180);
         pop();
         
         }
@@ -313,15 +328,22 @@ function sceneScreens () {
     push();
         rotateX(30);
         rotateY(-49);
-        image(ouijaBoard, -535, -399+ouijaMove, 620, 585);
-        image(altar2Intersections, 525, 540+altarMove, 620, 585);
+        image(stage2, -549, -399+stage2Move, 610, 586);
+        image(stage1, 549, 559+stage1Move, 610, 586);
     pop();
+    
+    if (screen==3 || screen==4 || screen==5) {
+        backdropMove = 0;
+        stage1Move = 0;
+        stage2Move = 0;
+
+    }
     
     if (screen==6) {
         print('hello we r trying to float');
-        cloudMove = cloudMove - 0.75;
-        altarMove = altarMove - 2;
-        ouijaMove = ouijaMove - 1;
+        backdropMove = backdropMove - 1.5;
+        stage1Move = stage1Move - 4;
+        stage2Move = stage2Move - 2;
     }
 
 }
@@ -336,7 +358,7 @@ function mousePressed() {
     }
     else if (screen==2) {
         // progress to the next screen if all the images are in place and the poem has has played
-        if (cloudMove == 0 && altarMove == 0 && ouijaMove == 0 && cyborgWitchXYZplayed == 1) {
+        if (backdropMove == 0 && stage1Move == 0 && stage2Move == 0 && cyborgWitchXYZplayed == 1) {
             screen = screen + 1;
         }
     }
