@@ -73,6 +73,7 @@ let handsOn = 0;
 // SOUND EFFECTS
 // beginning
 var spokenWord;
+var spokenWordCount = 0;
 var thud1, thud2, thud3;
 let reverb;
 
@@ -230,6 +231,13 @@ function draw() {
             textLeading(84);
             text('Enter Stage 2,\n' + userName, -700, -360);
         pop();
+        
+        if (!spokenWord.isPlaying() && spokenWordCount==0){
+            print('hello yes the witches r speaking');
+            spokenWord.play();
+            reverb.process(spokenWord, 10, 5);
+            spokenWordCount = 1;
+        }
         
         stageScreens();
 
@@ -505,10 +513,6 @@ function mousePressed() {
     if (screen==1) {
         screen = screen + 1;
         
-        if (!spokenWord.isPlaying()){
-            spokenWord.play();
-            reverb.process(spokenWord, 10, 5);
-        }
     }
     
     else if (screen==2) {
