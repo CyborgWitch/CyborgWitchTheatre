@@ -299,7 +299,7 @@ function draw() {
     
   // fake code SETUP, line 4
   else if (screen==7) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
       userInput.changed(newText);
