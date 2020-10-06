@@ -179,7 +179,7 @@ function modelReady() {
 
 
 function draw() {
-    background(0, 255, 50);
+    background(0, 255, 0);
     noFill();
     stroke(255, 0, 0);
     strokeWeight(0.75);
