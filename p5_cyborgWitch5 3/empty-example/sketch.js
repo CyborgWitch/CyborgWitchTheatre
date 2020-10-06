@@ -19,6 +19,7 @@ var stage1;
 var stage2;
 var liveCyborgWitch;
 var speechBubble;
+var samplePoemIllustration;
 
 //variables to float in scene
 var backdropMove = -999;      
@@ -26,6 +27,7 @@ var stage1Move = -1300;
 var stage2Move = -1000;
 
 var backdropOut, stage1Out, stage2Out;
+var witchCursor;
 
 // SOUND EFFECTS—FILES
 var cyborgWitchXYZ;
@@ -52,13 +54,31 @@ let incantation = '';
 // array of poems
 let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', 
 
-             '\n// The broken drink\n// of our young day\n// Wild fields rising\n// Drifting, leaves falling\n// sometimes fragrant\n// Summer is waking\n// Rain Dance the bodies', 
+             '// The broken drink\n// of our young day\n// Drifting, leaves falling,\n// sometimes fragrant\n// Wild fields rising\n// Summer is waking', 
 
-             '// Mouth is in the edge\n// In the incense\n// The butterfly is double\n// The mouth is in the fate\n// There is no love,no love\n// A flower blooms', 
+             '// Mouth is in the edge\n// in the smoke of incense\n// The butterfly is double\n// The mouth is in the fate,\n// there is no love,no love\n// a flower blooms', 
              
-             '// Listen to gold\n// We swim in flowers\n// Peach leaves with love\n// Our joyous meeting\n// Poems do not understand\n// Do not listen', 
+             '// Listen to gold\n// We swim in flowers\n// Peach leaves with love,\n// our joyous meeting\n// Poems do not understand\n// do not dare listen', 
              
-             '// Oblique season\n// of wind and rain\n// It loves in its way\n// Love puppets\n// from it the moon\n// Cloud in a day'];
+             '// Oblique season\n// of wind and rain\n// It loves in its way,\n// from it the moon\n// Light and hot night\n// takes forever to break',
+
+             '// A few moving days\n// in the third year\n// of small happiness\n// All the rich gold\n// has been drunk\n// So see you in sleep.',
+             
+             '// Calling dragonflies,\n// wind and rain\n// The flowers are in\n// the dust once more\n// Our small days,\n// a passion for eating.',
+             
+             '// Nourishing a flood\n// and letting in a dream\n// Lower a finger into\n// the spring youth,\n// while the night rains\n// into ocean pools',
+            
+             '// Incense calls from\n// the young and the old\n// Rain Road, the hands\n// awkward and sweet\n// It is better to show\n// your intentions',
+                          
+             '// Boil and boil,\n// white cloud nest\n// The window is hot\n// from the city noon\n// Where people are\n// entangled in the road',
+
+             '// A round of leisured\n// beauty we see creep\n// I am still green here\n// in the daytime\n// Watch the moment\n// and give it away',
+
+             '// The sweat of the season\n// fresh air without washing\n// Hot out of darkness\n// take the most strange\n// pond flowers in the south\n// and spit out the scent',
+
+             '// See you do not need to\n// cut deep into the fog.\n// The day is in the shadow\n// of the highest hope\n// Go on tiptoe and run\n// carry with you the sun',
+
+             '// Autumn song\n// No longer burn to the\n// moment of Summer.\n// Rain dance the bodies\n// The fevered hour is idle\n// and the wind is sung'];
 
 let choosePoem = '';
 
@@ -70,10 +90,12 @@ function preload() {
     droulers = loadFont('assets/Droulers-Regular.otf');
     droulersItalic = loadFont('assets/Droulers-Italic.otf');
     
-    backdrop = loadImage('assets/CodeDiscotheque2 copy.jpg');
+    backdrop = loadImage('assets/PoetryMainStage.jpg');
+    samplePoemIllustration = loadImage('assets/PoetryMainStage2.jpg');
     stage2 = loadImage('assets/Poetry_sideStage.png');
     stage1 = loadImage('assets/Poetry_sideStage2.jpg');
     speechBubble= loadImage('assets/speechBubble.png');
+    witchCursor = loadImage('assets/WitchCursor.png');
     
     // beginning poem
     cyborgWitchXYZ = loadSound('assets/CyborgWitch_scenes Mixdown 2.mp3');
@@ -157,24 +179,27 @@ function draw() {
     noFill();
     stroke(255, 0, 0);
     strokeWeight(0.75);
-    
-    
+//    noCursor();
+//    push();
+//    translate(mouseX, mouseY);
+//    image(witchCursor, 0, 0, 64, 64);
+//    pop();
   //alternate isometric grid
-    for (let k = -1200; k < 1200; k += 40) {
-        line(k, -1200, k, 1200);
+    for (let k = -1400; k < 1400; k += 40) {
+        line(k, -1400, k, 1400);
     }
   
     push();
         rotate(60);
-        for (let l = -1200; l < 1200; l += 40) {
-            line(l, -1200, l, 1200);  
+        for (let l = -1400; l < 1400; l += 40) {
+            line(l, -1400, l, 1400);  
         }
     pop();
   
     push();
         rotate(-60);
-        for (let m = -1200; m < 1200; m += 40) {
-        line(m, -1200, m, 1200);
+        for (let m = -1400; m < 1400; m += 40) {
+        line(m, -1400, m, 1400);
         }
     pop();
     
@@ -341,6 +366,17 @@ function sceneScreens () {
     
     if (screen==6) {
         print('hello we r trying to float');
+        
+        push();            
+            rotateX(30);
+            rotateY(49);
+            textFont(trickster);
+            textAlign(CENTER, CENTER);
+            textSize(64);
+            fill(255, 0, 255);
+            text(incantation, textX-100, textY+180+backdropMove);
+        pop();
+        
         backdropMove = backdropMove - 1.5;
         stage1Move = stage1Move - 4;
         stage2Move = stage2Move - 2;
