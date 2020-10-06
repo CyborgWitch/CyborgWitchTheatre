@@ -1,4 +1,6 @@
-var screen = 1;
+var width, height;
+
+var screen = 5;
 var numberOfPages = 11;
 
 // fake code text — poem
@@ -6,11 +8,15 @@ var l1 = ' 1 //Fiends, mysteries, wretched ones,\n 2 //Enter, this Cyborg Witch 
 var l2 = ' 5 //\n 6 //Code walls, witch speak\n 7 //Setup and draw our bodies\n 8 //Into a cyborg witch becoming.\n 9 //Into the wilds of the web.';
 var l3 = '10 //\n11 //We call forth this stage.\n12 //Where possibilities multiply\n13 //Becoming becomes viral.\n14 //Gender x race x sexuality\n15';
 // fake code text — setup 
-var l4 = '\n19\n20 incantation setup(CyborgWitchTheatre) {\n21\n22   dimensions.multiply();\n23   intersection(Cyborg*Witch);\n24   intersection(ofTheBody);\n25   intersection.declare(queerChineseAustralianWoman);\n26\n27 }';
-var l5 = '28\n29 incantation draw(intersections) {\n30\n31   perspective(gridPlane);\n32   stage.set(2);\n33   stage.scenes(2);\n34\n\n\n\n\n\n40\n41 }\n';
+//var l4 = '\n19\n20 incantation setup(CyborgWitchTheatre) {\n21\n22   dimensions.multiply();\n23   intersection(Cyborg*Witch);\n24   intersection(ofTheBody);\n25   intersection.declare(queerChineseAustralianWoman);\n26\n27 }';
+//var l5 = '28\n29 incantation draw(intersections) {\n30\n31   perspective(gridPlane);\n32   stage.set(2);\n33   stage.scenes(2);\n34\n\n\n\n\n\n40\n41 }\n';
+var l4 = '  dimensions.multiply();\n  intersection(Cyborg*Witch);\n  intersection(ofTheBody);\n  intersection.declare(queerChineseAustralianWomxn);';
+var l5 = '  perspective(gridPlane);\n  stage.set(2);\n  stage.scenes(2)';
+
+var sideNumbers1 = '\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41';
 
 // mouseSparkle, drawing sparkles when mouse is pressed
-let totalPoints = 7;
+let totalPoints = 5;
 let angle = 0;
 let gap = 360/totalPoints;
 let rInside  = 15;
@@ -35,19 +41,35 @@ var codeForth;
 var fiendIsPlaying = false;
 var theatreIsPlaying = false;
 var codeForthIsPlaying = false;
+var codeForthCount = 0;
+var softWind;
+var usernameSound;
+var usernameSound2;
+
+var usernameSoundCount = 0;
+var portalSound;
+var portalSoundCount = 0;
+var incantationSound1, incantationSound2;
+var incantationSound1Count = 0;
+var incantationSound2Count = 0;
+var MagicSound;
+var MagicSoundCount = 0;
+
+
 let reverb;
 
 // USERNAME
 var userInput;
 var userName = '';
 var userEnter = false;
+var userNameIn = false;
 // checking if username has been entered
 var keyEnter = 0;
 
 // incantation enact — draw grid in, float code out. 
 var grid = false;
 var codeOut = -1;
-var opacity = 0;
+var opacity = 1;
 
 function preload() {
     droulers = loadFont('assets/Droulers-Regular.otf');
@@ -55,11 +77,20 @@ function preload() {
 
     trickster = loadFont('assets/Trickster-Reg.otf');
     
+    //spoken word
     fiend = loadSound('assets/FIENDS2.mp3');
     theatre = loadSound('assets/SETUP2.mp3');
     codeForth = loadSound('assets/STAGE2.mp3');
     
-
+    //sound effects;
+    softWind = loadSound('assets/soft wind.mp3');
+    usernameSound = loadSound('assets/tinkerbellishTimbre.mp3');
+    userNameSound2 = loadSound('assets/MagicSound.mp3');
+    portalSound = loadSound('assets/MagicalPortalOpen.mp3');
+    incantationSound1 = loadSound('assets/MagicWand1.mp3');
+    incantationSound2 = loadSound('assets/magicWand2.mp3');
+    MagicSound = loadSound('assets/MagicSound.mp3');
+    portalSound = loadSound('assets/MagicalPortalOpen.mp3');
 }
     
 /*function voiceReady() {
@@ -70,9 +101,29 @@ function preload() {
 
 } */
 
+function windowResized() {
+    setDimensions();
+    resizeCanvas(width, height);
+    
+    textFont(droulers);
+    textSize(21);
+    textAlign(LEFT);
+    textLeading(24);
+    
+    rectMode(CENTER);
+    angleMode(DEGREES);
+
+}
+
+function setDimensions() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+}
+
 function setup() {
   // put setup code here
-    createCanvas(1440, 900);
+    setDimensions(); 
+    createCanvas(width, height);
     background(0, 255, 75);
     
     textFont(droulers);
@@ -92,7 +143,7 @@ function draw() {
       
   fill(255, 0, 0);
   print(screen);
-    
+
   // big "cyborg witch theatre"    
   if (screen==1) {      
       background(0, 255, 75);
@@ -101,13 +152,13 @@ function draw() {
       push();
       textSize(163);
       textLeading(150);
-      text('Cyborg Witch\nTheatre', 50, 130);
+      text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
       
       push();
       stroke(255, 0, 0);
-      line(0, height/6+10, width, height/6+10);
-      line(0, height/3+10, width, height/3+10);
+      line(0, 130, width, 130);
+      line(0, 280, width, 280);
       pop();
 //      
   }
@@ -121,16 +172,18 @@ function draw() {
       push();
       textSize(163);
       textLeading(150);
-      text('Cyborg Witch\nTheatre', 50, 130);
+      text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
       
       text(l1, 50, 552);
 
       push();
       stroke(255, 0, 0);
-      line(0, height/6+10, width, height/6+10);
-      line(0, height/3+10, width, height/3+10);
+      line(0, 130, width, 130);
+      line(0, 280, width, 280);
       pop();
+      
+
   }
   
   // second stanza of poem, 'theatre'
@@ -142,16 +195,16 @@ function draw() {
       push();
       textSize(163);
       textLeading(150);
-      text('Cyborg Witch\nTheatre', 50, 130);
+      text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
       
-      text(l1, 50, 552);
-      text(l2, 50, 648);
+      text(l1, 40, 552);
+      text(l2, 40, 648);
       
       push();
       stroke(255, 0, 0);
-      line(0, height/6+10, width, height/6+10);
-      line(0, height/3+10, width, height/3+10);
+      line(0, 130, width, 130);
+      line(0, 280, width, 280);
       pop();
 
     
@@ -167,18 +220,23 @@ function draw() {
       push();
       textSize(163);
       textLeading(150);
-      text('Cyborg Witch\nTheatre', 50, 130);
+      text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
       
-      text(l1, 50, 552);
-      text(l2, 50, 648);
-      text(l3, 50, 768);
+      text(l1, 40, 552);
+      text(l2, 40, 648);
+      text(l3, 40, 768);
       
       push();
       stroke(255, 0, 0);
-      line(0, height/6+10, width, height/6+10);
-      line(0, height/3+10, width, height/3+10);
+      line(0, 130, width, 130);
+      line(0, 280, width, 280);
       pop();
+      
+      if (!codeForth.isPlaying &&codeForthCount==1 && !softWind.isPlaying()){
+          softWind.play();
+          print('wind is blowing');
+      }
 
   }
 
@@ -188,14 +246,18 @@ function draw() {
       mouseSparkle();
 
             
-      text('16 let user = CyborgWitch;', 50, 50);
-      text('17 input your CyborgWitch username', 50, 74);
+      text('16 let user = CyborgWitch;', 40, 50);
+      text('17 input your CyborgWitch username', 40, 74);
       
       //username text box  
       userInput = createInput();
       userInput.position(520, 57+codeOut);
       userInput.changed(newText);
 
+      if (!softWind.isPlaying()){
+          softWind.play();
+          print('wind is blowing');
+      }
   }
   // print username
   else if (screen==6) {
@@ -205,10 +267,33 @@ function draw() {
       userInput.changed(newText);
 
       
-      text('16 let user = CyborgWitch;', 50, 50);
-      text('17 input your CyborgWitch username', 50, 74);
-      text('18 Welcome,', 50, 98);
+      text('16 let user = CyborgWitch;', 40, 50);
+      text('17 input your CyborgWitch username', 40, 74);
+      text('18 Welcome,', 40, 98);
       text(userName + ';', 205, 98);
+
+      // username entered, sound effect plays and numbers appear
+      if (keyEnter==true && userNameIn==true) {
+          text(sideNumbers1, 40, 98);
+          text('incantation setup(CyborgWitchTheatre) {\n\n\n\n\n\n\n}\n\nincantation draw(' + userName + ') {\n\n\n\n\n\n\n\n\n}', 80, 146)
+
+          
+//          if (!usernameSound.isPlaying() && usernameSoundCount==0) {
+//              usernameSound.play();
+//              usernameSoundCount = 1;
+//          }
+          if (!MagicSound.isPlaying() && MagicSoundCount==0) {
+              MagicSound.play();
+              MagicSoundCount = 1;
+          }
+          
+          
+      }
+          
+      if (!softWind.isPlaying()){
+          softWind.play();
+          print('wind is blowing');
+      }
 
   }  
     
@@ -220,12 +305,20 @@ function draw() {
       userInput.changed(newText);
 
                   
-      text('16 let user = CyborgWitch;', 50, 50);
-      text('17 input your CyborgWitch username', 50, 74);
-      text('18 Welcome,', 50, 98);
+      text('16 let user = CyborgWitch;', 40, 50);
+      text('17 input your CyborgWitch username', 40, 74);
+      text('18 Welcome,', 40, 98);
       text(userName + ';', 205, 98);
-      text(l4, 50, 98);
+      text(sideNumbers1, 40, 98);
+      text('incantation setup(CyborgWitchTheatre) {\n\n\n\n\n\n\n}\n\nincantation draw(' + userName + ') {\n\n\n\n\n\n\n\n\n\n\n\n}', 80, 146);
+      text(l4, 80, 194);
       
+      if (!incantationSound2.isPlaying() && incantationSound2Count==0) {
+          incantationSound2.play();
+          //incantationSound2.volume(1);
+          incantationSound2Count = 1; 
+      }
+
   }
     
   // fake code DRAW, line 5
@@ -234,21 +327,29 @@ function draw() {
       mouseSparkle();
 
       userInput.changed(newText);
+      
+      if (!incantationSound2.isPlaying() && incantationSound2Count==1) {
+          incantationSound2.play();
+          //incantationSound2.volume(1);
+          incantationSound2Count = 2; 
+      }
 
-      text('16 let user = CyborgWitch;', 50, 50);
-      text('17 input your CyborgWitch username', 50, 74);
-      text('18 Welcome,', 50, 98);
+      text('16 let user = CyborgWitch;', 40, 50);
+      text('17 input your CyborgWitch username', 40, 74);
+      text('18 Welcome,', 40, 98);
       text(userName + ';', 205, 98);
-      text(l4, 50, 98);
-      text(l5, 50, 338);
+      text(sideNumbers1, 40, 98);
+      text('incantation setup(CyborgWitchTheatre) {\n\n\n\n\n\n\n}\n\nincantation draw(' + userName + ') {\n\n\n\n\n\n\n\n\n\n\n\n}', 80, 146);
+      text(l4, 80, 194);
+      text(l5, 80, 400);
       
       // fake code with USERNAME
-      text('35   ' + userName + '.pronouns();', 50, 506);
-      text('36   ' + userName + '.body(engage);', 50, 530);
-      text('37   ' + userName + '.voice(speak);', 50, 554);
-      text('38   ' + userName + '.gesture(create);', 50, 578);
-      text('39   ' + userName + '.enter(softly);', 50, 602);
-      
+      text('  ' + userName + '.pronouns();', 80, 506+codeOut);
+      text('  ' + userName + '.body(engage);', 80, 530+codeOut);
+      text('  ' + userName + '.voice(speak);', 80, 554+codeOut);
+      text('  ' + userName + '.gesture(create);', 80, 578+codeOut);
+      text('  ' + userName + '.enter(softly);', 80, 602+codeOut);
+
   }  
   else if (screen==9) {
       background(0, 255, 75);
@@ -256,29 +357,38 @@ function draw() {
       userInput.position(520, 57+codeOut);
 
 
-      text('16 let user = CyborgWitch;', 50, 50+codeOut);
-      text('17 input your CyborgWitch username', 50, 74+codeOut);
-      text('18 Welcome,', 50, 98+codeOut);
+      text('16 let user = CyborgWitch;', 40, 50+codeOut);
+      text('17 input your CyborgWitch username', 40, 74+codeOut);
+      text('18 Welcome,', 40, 98+codeOut);
       text(userName + ';', 205, 98+codeOut);
-      text(l4, 50, 98+codeOut);
-      text(l5, 50, 338+codeOut);
+      text(sideNumbers1, 40, 98+codeOut);
+      text('incantation setup(CyborgWitchTheatre) {\n\n\n\n\n\n\n}\n\nincantation draw(' + userName + ') {\n\n\n\n\n\n\n\n\n\n\n\n}', 80, 146+codeOut);
+      text(l4, 80, 194+codeOut);
+      text(l5, 80, 400+codeOut);
             
       // fake code with USERNAME
-      text('35   ' + userName + '.pronouns();', 50, 506+codeOut);
-      text('36   ' + userName + '.body(engage);', 50, 530+codeOut);
-      text('37   ' + userName + '.voice(speak);', 50, 554+codeOut);
-      text('38   ' + userName + '.gesture(create);', 50, 578+codeOut);
-      text('39   ' + userName + '.enter(softly);', 50, 602+codeOut);
+      text('  ' + userName + '.pronouns();', 80, 506+codeOut);
+      text('  ' + userName + '.body(engage);', 80, 530+codeOut);
+      text('  ' + userName + '.voice(speak);', 80, 554+codeOut);
+      text('  ' + userName + '.gesture(create);', 80, 578+codeOut);
+      text('  ' + userName + '.enter(softly);', 80, 602+codeOut);
       
-      if (codeOut > -1000) {
-          codeOut = codeOut * 1.03;
+      perspectiveGrid();
+      //opacity = opacity + 1;
+      
+      if (codeOut > -800) {
+          codeOut = codeOut -1;
           mouseSparkle();
+          
+          if (!portalSound.isPlaying() && portalSoundCount == 0) {
+              portalSound.play();
+              portalSoundCount = 1;
+          }
 
-          print(codeOut);
+
+          //print(codeOut);
       } else {
-          codeOut = -1001;
-          perspectiveGrid();
-          userInput.remove();
+          codeOut = -801;
           
           push();
             //fill(255, 0, 0, opacity);
@@ -289,28 +399,6 @@ function draw() {
             text('This way, \n'+ userName + '... \nStage 1', 50, 120);
           pop();
           
-          for (let i = 0; i < 60; i++) {
-               push();
-               translate(775, 346);
-               stroke(255, 0, 0);
-               strokeWeight(4);
-              
-               angle = angle + i*gap;
-               x3 = rInside2*cos(angle);
-               y3 = rInside2*sin(angle);
-               x4 = rOutside2*cos(angle);
-               y4 = rOutside2*sin(angle);
-               line(x3, y3, x4, y4);
-               pop();
-        }
-      
-//          push();
-//            //fill(255, 0, 0, opacity);
-//            textFont(droulers);
-//            textSize(24);
-//            textLeading(68);
-//            //text('invoking perspective(gridPlane)', 50, 226);
-//          pop();
       }
   }
       
@@ -318,6 +406,7 @@ function draw() {
   else if (screen==10) {
       background(0, 255, 75);
       mouseSparkle();
+      //opacity = opacity + 1;
       perspectiveGrid();
       
       userInput.remove();
@@ -340,6 +429,7 @@ function draw() {
 function newText() {
     //userInput.changed(newText+codeOut);
     userName = userInput.value();
+    userNameIn = true;
     localStorage.setItem('userName', userName);
     //console.log(localStorage.getItem('userName'));
     //userInput.remove();
@@ -385,7 +475,7 @@ function mousePressed() {
         codeForth.play();
         codeForthIsPlaying = true;
         reverb.process(codeForth, 10, 5);
-        
+        codeForthCount = 1;
         screen = screen + 1;
     }
   }
@@ -421,8 +511,8 @@ function mousePressed() {
 
   else if (screen==9) {
     //screen = screen + 1;
-    if (opacity > 255) {
-        print('screen = 11, next link');
+    if (opacity > 255 && codeOut  == -801) {
+        print('screen = 9, next link');
         window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_cyborgWitch5%203/empty-example/");
     }
   }
@@ -452,6 +542,7 @@ function keyPressed() {
         userEnter = true;
         keyEnter++;
         print(userEnter);
+        text(sideNumbers1, 50, 98);
     } 
 }
 
@@ -481,29 +572,29 @@ function mouseSparkle() {
 
 function perspectiveGrid() {
     // isometric grid    
-    opacity = opacity + 1;
+    opacity = opacity * 1.015;
     print(opacity);
     push();
         translate(width/2, height/2);
         stroke(255, 0, 0, opacity);
         strokeWeight(0.5);
 
-            for (let k = -800; k < 800; k += 40) {
-                line(k, -850, k, 850);
+            for (let k = -1400; k < 1400; k += 40) {
+                line(k, -1400, k, 1400);
             }
 
             push();
             rotate(60);
-            for (let l = -800; l < 800; l += 40) {
-                 line(l, -850, l, 850);  
+            for (let l = -1400; l < 1400; l += 40) { 
+                 line(l, -1400, l, 1400);  
             }
             pop();
 
             push();
             rotate(-60);
 
-            for (let m = -800; m < 800; m += 40) {
-            line(m, -850, m, 850);
+            for (let m = -1400; m < 1400; m += 40) {
+            line(m, -1400, m, 1400);
             }
             pop();
 
