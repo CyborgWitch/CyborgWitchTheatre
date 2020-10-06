@@ -126,7 +126,7 @@ function setup() {
   createCanvas(width, height, WEBGL);
   // ortho with near-far of the clipping plane going from negative to positive
   ortho(-width/2, width/2,-height/2, height/2, -width*2, width*2);
-  background(0, 255, 75);
+  background(0, 255, 0);
     
     // webcam
     liveCyborgWitch = createCapture(VIDEO);
@@ -175,7 +175,7 @@ function setDimensions() {
 }
 
 function draw() {
-    background(0, 255, 75);
+    background(0, 255, 0);
     noFill();
     stroke(255, 0, 0);
     strokeWeight(0.75);
