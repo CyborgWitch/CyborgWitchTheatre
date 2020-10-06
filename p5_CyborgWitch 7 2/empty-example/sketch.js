@@ -124,7 +124,7 @@ function setup() {
   // put setup code here
     setDimensions(); 
     createCanvas(width, height);
-    background(0, 255, 75);
+    background(0, 255, 0);
     
     textFont(droulers);
     textSize(21);
@@ -146,7 +146,7 @@ function draw() {
 
   // big "cyborg witch theatre"    
   if (screen==1) {      
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
       push();
@@ -165,7 +165,7 @@ function draw() {
     
   // first stanza of poem, fiends. 
   else if (screen==2) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
       //TEXT
@@ -188,7 +188,7 @@ function draw() {
   
   // second stanza of poem, 'theatre'
   else if (screen==3) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
       
       //TEXT
@@ -212,7 +212,7 @@ function draw() {
   
   // third stanza of poem, call/code forth. 
   else if (screen==4) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
       
@@ -242,7 +242,7 @@ function draw() {
 
   // enter username 
   else if (screen==5) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
             
@@ -261,7 +261,7 @@ function draw() {
   }
   // print username
   else if (screen==6) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
       userInput.changed(newText);
@@ -323,7 +323,7 @@ function draw() {
     
   // fake code DRAW, line 5
   else if (screen==8) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
 
       userInput.changed(newText);
@@ -352,7 +352,7 @@ function draw() {
 
   }  
   else if (screen==9) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       userInput.changed(newText);
       userInput.position(520, 57+codeOut);
 
@@ -404,7 +404,7 @@ function draw() {
       
   // new text, transition
   else if (screen==10) {
-      background(0, 255, 75);
+      background(0, 255, 0);
       mouseSparkle();
       //opacity = opacity + 1;
       perspectiveGrid();
