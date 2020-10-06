@@ -12,7 +12,6 @@ var numberOfPages = 5;
 
 // resizing window size
 var width, height;
-var screen;
 
 // webcam feed
 let video;
@@ -184,23 +183,24 @@ function draw() {
     noFill();
     stroke(255, 0, 0);
     strokeWeight(0.75);
+    print(screen);
     
       //alternate isometric grid
-    for (let k = -1200; k < 1200; k += 40) {
-        line(k, -1200, k, 1200);
+    for (let k = -1400; k < 1400; k += 40) {
+        line(k, -1400, k, 1400);
     }
   
     push();
         rotate(60);
-        for (let l = -1200; l < 1200; l += 40) {
-            line(l, -1200, l, 1200);  
+        for (let l = -1400; l < 1400; l += 40) {
+            line(l, -1400, l, 1400);  
         }
     pop();
   
     push();
         rotate(-60);
-        for (let m = -1200; m < 1200; m += 40) {
-        line(m, -1200, m, 1200);
+        for (let m = -1400; m < 1400; m += 40) {
+        line(m, -1400, m, 1400);
         }
     pop();
     
@@ -242,26 +242,26 @@ function draw() {
         stageScreens();
 
         // float in screens and sound effect
-        if (backdropMove == -1.5) {
+        if (backdropMove == -0.75) {
             backdropMove = 0;
             thud1.play();
         } else if (backdropMove < 0) {
-            backdropMove = backdropMove + 1.5;
+            backdropMove = backdropMove + 0.75;
         }
         
-        if (stage1Move == -4) {
+        if (stage1Move == -2) {
             stage1Move = 0;
             thud2.play();
             print(thud2.isPlaying());
         } else if (stage1Move < 0) {
-            stage1Move = stage1Move + 4;
+            stage1Move = stage1Move + 2;
         }
         
-        if (stage2Move == -2) {
+        if (stage2Move == -1) {
             stage2Move = 0;
             thud3.play();
         } else if (stage2Move < 0) {
-            stage2Move = stage2Move + 2;
+            stage2Move = stage2Move + 1;
         }
     }
     // webcam
@@ -328,7 +328,7 @@ function stageScreens() {
         rotateY(-49);
         // webcam popup
         if (screen==3 || screen ==4) {
-            image(video, -520, -440, 300, 180);
+            image(video, -520, -440, 380, 180);
         }
     image(stage2, -549, -399+stage2Move, 610, 586);
     pop();
@@ -347,7 +347,7 @@ function drawKeypoints()  {
 push();
     
     // getting the keypoints to draw from an orthographic perspective. 
-    translate(-width/3, -height);
+    translate(-width/4, -height/2);
     rotateX(30);
     rotateY(49);
 
@@ -380,7 +380,7 @@ push();
           distanceHands = dist(pose.leftWrist.x,  pose.leftWrist.y, pose.rightWrist.x, pose.rightWrist.y);
           
           // when the models are LOADED, the opera has started, and user gets CLOSE UP 2 the screen
-          mappedOrchidCloseUpSize = map(distanceEyes, 0, 150, 0, 10, true);
+          mappedOrchidCloseUpSize = map(distanceEyes, 0, 100, 0, 10, true);
 
       // DRAWING KEYPOINTS. Only draw an ellipse is the pose probability is bigger than 0.2 
       if (screen==4 && keypoint.score > 0.2) {
@@ -454,7 +454,7 @@ push();
           if (handsOn > 1) {
               soundMapped = map(soundLevel, 0, 0.3, 100, 255);
               push();
-                  translate(width/2, 800);
+                  translate(width/3, height/3);
                   rotateY(angle);
                   rotateX(-90);
                   scale(orchidSize);
@@ -480,7 +480,7 @@ function drawSkeleton() {
         push();
 
           // getting the skeleton to draw from an orthographic perspective. 
-          translate(-width/3, -height);
+          translate(-width/4, -height/2);
           rotateX(30);
           rotateY(49);
 
@@ -512,7 +512,7 @@ function mousePressed() {
     //mousePress to trigger screens and spokenWord
     if (screen==1) {
         screen = screen + 1;
-        
+
     }
     
     else if (screen==2) {
