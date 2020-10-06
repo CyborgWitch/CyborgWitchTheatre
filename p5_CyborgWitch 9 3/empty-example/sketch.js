@@ -7,7 +7,7 @@
 ml5 Example
 PoseNet example using p5.js
 === */
-var screen = 2;
+var screen = 1;
 var numberOfPages = 5;
 
 // resizing window size
