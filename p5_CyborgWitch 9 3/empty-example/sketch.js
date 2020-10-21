@@ -8,7 +8,7 @@ ml5 Example
 PoseNet example using p5.js
 === */
 var screen = 1;
-var numberOfPages = 5;
+var numberOfPages = 6;
 
 // resizing window size
 var width, height;
@@ -26,6 +26,8 @@ var droulersItalic;
 let hand;
 let orchid;
 var orchidYes = false;
+var popup1;
+var popup2;
 
 // new stage
 let backdrop;
@@ -75,6 +77,8 @@ var spokenWord;
 var spokenWordCount = 0;
 var thud1, thud2, thud3;
 let reverb;
+var endCyborgWitchXYZ2;
+var endCyborgWitchXYZ2_COUNT = 0;
 
 // interaction
 var sczwhoop;
@@ -93,6 +97,19 @@ var soundLevel;
 // soundLevel visualisation
 var soundMapped = 0;
 
+var button;
+var button2; 
+var button3;
+
+// mouseSparkle, drawing sparkles when mouse is pressed
+let totalPoints = 5;
+let mouseSparkleAngle = 0;
+let gap = 360/totalPoints;
+let rInside  = 15;
+let rOutside = 25;
+var x1, y1;
+var x2, y2;
+
 function preload() {
     
     droulers = loadFont('assets/Droulers-Regular.otf');
@@ -102,7 +119,12 @@ function preload() {
     stage1 = loadImage('assets/Hands_sideStage.jpg');
     stage2 = loadImage('assets/Hands_sideStage2.png');
     
+    popup1 = loadImage('assets/OperaOfTheOrchid_POPUP1.png');
+    popup2 = loadImage('assets/OperaOfTheOrchid_POPUP1.png');
+
+    
     spokenWord = loadSound('assets/CyborgWitch_scenes3 Mixdown 1.mp3');
+    endCyborgWitchXYZ2 = loadSound('assets/CyborgWitch_scenes4 Mixdown 1.mp3')
     thud1 = loadSound('assets/whoop__ui-back-sound.mp3');
     thud2 = loadSound('assets/whoop__ui-back-sound.mp3');
     thud3 = loadSound('assets/whoop__ui-back-sound.mp3');
@@ -146,7 +168,8 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
     
-  textSize(96);
+  textSize(72);
+  textLeading(68);
   textAlign(LEFT, CENTER);
   textFont(droulers);
 }
@@ -163,7 +186,8 @@ function windowResized() {
     angleMode(DEGREES);
     rectMode(CENTER);
     
-    textSize(96);
+    textSize(72);
+    textLeading(68);
     textAlign(LEFT, CENTER);
     textFont(droulers);
 
@@ -184,6 +208,8 @@ function draw() {
     stroke(255, 0, 0);
     strokeWeight(0.75);
     print(screen);
+    
+    mouseSparkle();
     
       //alternate isometric grid
     for (let k = -1400; k < 1400; k += 40) {
@@ -219,8 +245,7 @@ function draw() {
         //USERNAME RETRIEVE. 
         push();
             fill(255, 0, 0);
-            textLeading(84);
-            text('Enter Stage 2,\n' + userName, -700, -360);
+            text('Enter scene_2,\n' + userName, -700, -375);
         pop();
     }
     
@@ -228,8 +253,7 @@ function draw() {
     else if (screen==2) {
         push();
             fill(255, 0, 0);
-            textLeading(84);
-            text('Enter Stage 2,\n' + userName, -700, -360);
+            text('Enter scene_2,\n' + userName, -700, -375);
         pop();
         
         if (!spokenWord.isPlaying() && spokenWordCount==0){
@@ -266,15 +290,59 @@ function draw() {
     }
     // webcam
     else if (screen==3) {
+        push();
+            fill(255, 0, 0);
+            text('Enter scene_2,\n' + userName, -700, -375);
+        pop();
+        
         stageScreens();
         
     }
     
-    //start motion/sound interactions
+    // get hands and keypoints to appear
     else if (screen==4) {
         stageScreens();
+    }
+    //explainer boxes to give context
+    else if (screen==5) {
+        
+        // popup explainer 1, turn on orchid and music
+        push();
+            fill(175, 0, 0);            
 
-        print(handsOn);
+            if (mouseX > 860 && mouseY > 70 && mouseX < 1340 && mouseY < 230) {
+                image(popup1, 440, -300, 425, 250);
+                push();
+                textSize(26);
+                text('Opera of the Orchid', 265, -385);
+                pop();
+                
+                push();
+                textSize(16);
+                textLeading(19.2);
+                text('MOVE your hands! Scene 2 is for\ngestural play, inspired by the\norchid hand speak of Chinese opera.\nHighly stylised hand gestures were\ndeveloped to express emotion and\nperform/subvert gender roles.', 265, -285);
+                pop();
+                
+            } else {
+                image(popup1, 440, -300, 400, 225);
+                
+                push();
+                textSize(25);
+                text('Opera of the Orchid', 270, -375);
+                pop();
+                
+                push();
+                textSize(15);
+                textLeading(18);
+                text('MOVE your hands! Scene 2 is for\ngestural play, inspired by the\norchid hand speak of Chinese opera.\nHighly stylised hand gestures were\ndeveloped to express emotion and\nperform/subvert gender roles.', 270, -285);
+                pop();
+            }
+            
+        pop();
+        
+        stageScreens();
+
+        //print(handsOn);
         if (handsOn >= 1) {
             
             // orchid model called in draw keypoints
@@ -289,7 +357,58 @@ function draw() {
                 erhu.play();
             }
 
-            //HANDS UP
+            // next screen if the orchid is there and the sczwhoop is done playing
+            if (orchidYes==true && orchidSoundEffect==1 && !sczwhoop.isPlaying()) {
+                screen = 6;
+            }
+        }
+        
+    }
+    
+    // percussion parts 
+    else if (screen==6) {
+        
+        stageScreens();
+            push();
+            fill(175, 0, 0);            
+
+            if (mouseX > 70 && mouseY > 560 && mouseX < 370 && mouseY < 740) {
+                image(popup2, -480, 250, 425, 220);
+                push();
+                textSize(26);
+                text('hand_XY_Movenent', -660, 180);
+                pop();
+                
+                push();
+                textSize(16);
+                textLeading(19.2);
+                text('Orchestrate your own interactive\nopera. We invite you to embody\nthrough gesture: try clapping your\nhands, bring them up? Perhaps even\ncome a little closer…', -660, 265);
+                pop();
+                
+            } else {
+                image(popup2, -480, 250, 400, 195);
+                
+                push();
+                textSize(25);
+                text('hand_XY_Movement', -650, 190);
+                pop();
+                
+                push();
+                textSize(15);
+                textLeading(18);
+                text('Orchestrate your own interactive\nopera. We invite you to embody\nthrough gesture: try clapping your\nhands, bring them up? Perhaps even\ncome a little closer…', -650, 270);
+                pop();
+            }
+            
+        pop();
+        
+            //keep playing the erhu melody
+            if (orchidYes == true && !erhu.isPlaying()) {
+                erhu.play();
+            }
+        
+         // start interactive opera with percussion instruments
+         if (handsOn >= 1 && orchidYes==true) {
             if (!bangu.isPlaying() && leftHandUP && rightHandUP) {
                 bangu.play();
 
@@ -308,8 +427,71 @@ function draw() {
                             orchidSize = 1500;
                         }
 
+         }
+        
+    }
+    
+    //full interaction(all instruments, no boxes, add end button)
+    else if (screen==7) {
+        
+        stageScreens();
+        //keep playing the erhu melody
+        if (orchidYes == true && !erhu.isPlaying()) {
+            erhu.play();
         }
         
+         // start interactive opera with percussion instruments
+         if (handsOn >= 1 && orchidYes==true) {
+            if (!bangu.isPlaying() && leftHandUP && rightHandUP) {
+                bangu.play();
+
+            } 
+                //CLAP/SOUND
+                else if (!daluo.isPlaying() && soundLevel >= 0.3) {
+                    daluo.play();
+
+                } 
+                    //getting CLOSE to screen
+                    else if (!naobo.isPlaying() && mappedOrchidCloseUpSize == 10) {
+                        naobo.play();
+                        orchidSize = 2500;
+
+                        } else if (!naobo.isPlaying()) {
+                            orchidSize = 1500;
+                        }
+
+         }
+        
+        //create button to float out
+        //create function endScene_2
+        button = createButton('End scene_2');
+        button.position(19, 19);
+        button.mousePressed(endScene_2);
+        
+    }
+    
+    else if (screen==8) {
+        
+        print(mouseX, mouseY);
+        
+        button2 = createButton('Back to setup');
+        button2.position(160, 19);
+        button2.mousePressed(Setup_Link);
+        
+        button3 = createButton('Back to scene_1');
+        button3.position(320, 19);
+        button3.mousePressed(scene_1Link);
+
+
+        push();
+            fill(255, 0, 0);
+//            textSize(64);
+//            textLeading(68);
+            text('// For whatever’s yet to input\n// Their futures are afoot\n// And all that’s left unsaid\n// Your choices be not bled', -700, -275);
+        pop();
+        
+        stageScreens();
+
     }
     
 }
@@ -327,9 +509,12 @@ function stageScreens() {
         rotateX(30);
         rotateY(-49);
         // webcam popup
-        if (screen==3 || screen ==4) {
-            image(video, -520, -440, 380, 180);
-        }
+//        if (screen==3 || screen ==4) {
+//            push();
+//                tint(255, 0, 0);
+//                image(video, -525, -445, 320, 173);
+//            pop();
+//        }
     image(stage2, -549, -399+stage2Move, 610, 586);
     pop();
     
@@ -338,6 +523,30 @@ function stageScreens() {
         rotateY(-49);
         image(stage1, 549, 559+stage1Move, 610, 586);
     pop();
+    
+    if (screen==3 || screen==4 || screen==5 || screen==6 || screen==7) {
+        backdropMove = 0;
+        stage1Move = 0;
+        stage2Move = 0;
+        
+        push();
+            rotateX(30);
+            rotateY(-49);
+            // webcam popup
+            tint(255, 0, 0);
+            image(video, -525, -445, 320, 173);
+        pop();
+
+    }
+    
+    // float DOWN ? !!
+    if (screen==8) {
+        print('hello we r trying to float');
+        
+        backdropMove = backdropMove + 1.5;
+        stage1Move = stage1Move + 4;
+        stage2Move = stage2Move + 2;
+    }
 }
 
 
@@ -347,7 +556,7 @@ function drawKeypoints()  {
 push();
     
     // getting the keypoints to draw from an orthographic perspective. 
-    translate(-width/4, -height/2);
+    translate(-width/3, -height/2);
     rotateX(30);
     rotateY(49);
 
@@ -383,7 +592,7 @@ push();
           mappedOrchidCloseUpSize = map(distanceEyes, 0, 100, 0, 10, true);
 
       // DRAWING KEYPOINTS. Only draw an ellipse is the pose probability is bigger than 0.2 
-      if (screen==4 && keypoint.score > 0.2) {
+      if (screen==4 || screen==5 || screen==6 || screen==7 && keypoint.score > 0.2) {
           
           fill(255, 0, 0);
           noStroke();
@@ -406,7 +615,7 @@ push();
     }
   }
     //if the stage interaction has started
-    if (screen==4) {
+    if (screen==4 || screen==5 || screen==6 ||screen==7) {
         
             handSize = map(distanceEyes, 0, 100, 0, 10, true);
          // left hand
@@ -444,7 +653,7 @@ push();
             pop();
         
       //if hands are "TOGETHER", turn on orchid and music with handsON
-      if (distanceHands <= 50) {
+      if (distanceHands <= 50 && screen==5 || screen==6 || screen==7) {
           handsTogether = true;
           handsOn = handsOn + 1;
       } else {
@@ -454,7 +663,7 @@ push();
           if (handsOn > 1) {
               soundMapped = map(soundLevel, 0, 0.3, 100, 255);
               push();
-                  translate(width/3, height/3);
+                  translate(width/2, height/3);
                   rotateY(angle);
                   rotateX(-90);
                   scale(orchidSize);
@@ -476,11 +685,11 @@ pop();
 
 // A function to draw the skeletons, translating to get it in perspective
 function drawSkeleton() {
-    if (screen==4 || screen==4) {
+    if (screen==4 || screen==5 || screen==6 || screen==7) {
         push();
 
           // getting the skeleton to draw from an orthographic perspective. 
-          translate(-width/4, -height/2);
+          translate(-width/3, -height/2);
           rotateX(30);
           rotateY(49);
 
@@ -508,6 +717,28 @@ function drawSkeleton() {
     }
 }
 
+function endScene_2() {
+    screen = 8;
+    //play end CyborgWitchXYZ 2
+    
+    if (endCyborgWitchXYZ2_COUNT==0 && !endCyborgWitchXYZ2.isPlaying()) {
+        endCyborgWitchXYZ2.play();
+        reverb.process(endCyborgWitchXYZ2, 10, 5);
+        endCyborgWitchXYZ_COUNT2 = 1;
+    }
+
+}
+
+function Setup_Link() {
+    window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_CyborgWitch%207%202/empty-example/");
+
+}
+
+function scene_1Link() {
+    window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_cyborgWitch5%203/empty-example/");
+    
+}
+
 function mousePressed() {
     //mousePress to trigger screens and spokenWord
     if (screen==1) {
@@ -527,6 +758,46 @@ function mousePressed() {
     }
     
     else if (screen==4) {
+        screen = screen + 1;
+
+    }
+    
+    else if (screen==5) {
         
     }
+    
+    else if (screen==6) {
+          if (mouseX > 70 && mouseY > 560 && mouseX < 370 && mouseY < 740) {
+              screen = screen + 1;
+          }
+        
+    }
+    
+    else if (screen==7) {
+        
+    }
+}
+
+function mouseSparkle() {
+    // if mouse is pressed, then draw a "wand"
+    if (mouseIsPressed) {
+        push();
+        stroke(255, 0, 0);
+        fill(255, 0, 0);
+        translate(mouseX+2,mouseY+4);
+
+        for (let i = 0; i < totalPoints; i++) {
+            mouseSparkleAngle = i*gap
+      
+            x1 = rInside*cos(mouseSparkleAngle);
+            y1 = rInside*sin(mouseSparkleAngle);
+            x2 = rOutside*cos(mouseSparkleAngle);
+            y2 = rOutside*sin(mouseSparkleAngle);
+    
+            line(x1, y1, x2, y2);
+        }
+  pop();
+        
+    }
+    
 }
