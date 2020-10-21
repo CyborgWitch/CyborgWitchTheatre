@@ -8,8 +8,6 @@ var l1 = ' 1 //Fiends, mysteries, wretched ones,\n 2 //Enter, this Cyborg Witch 
 var l2 = ' 5 //\n 6 //Code walls, witch speak\n 7 //Setup and draw our bodies\n 8 //Into a cyborg witch becoming.\n 9 //Into the wilds of the web.';
 var l3 = '10 //\n11 //We call forth this stage.\n12 //Where possibilities multiply\n13 //Becoming becomes viral.\n14 //Gender x race x sexuality\n15';
 // fake code text — setup 
-//var l4 = '\n19\n20 incantation setup(CyborgWitchTheatre) {\n21\n22   dimensions.multiply();\n23   intersection(Cyborg*Witch);\n24   intersection(ofTheBody);\n25   intersection.declare(queerChineseAustralianWoman);\n26\n27 }';
-//var l5 = '28\n29 incantation draw(intersections) {\n30\n31   perspective(gridPlane);\n32   stage.set(2);\n33   stage.scenes(2);\n34\n\n\n\n\n\n40\n41 }\n';
 var l4 = '  dimensions.multiply();\n  intersection(Cyborg*Witch);\n  intersection(ofTheBody);\n  intersection.declare(queerChineseAustralianWomxn);';
 var l5 = '  perspective(gridPlane);\n  stage.set(2);\n  stage.scenes(2)';
 
@@ -63,6 +61,7 @@ var userInput;
 var userName = '';
 var userEnter = false;
 var userNameIn = false;
+var userNameBox = false;
 // checking if username has been entered
 var keyEnter = 0;
 
@@ -156,6 +155,12 @@ function draw() {
       pop(); 
       
       push();
+      textSize(16);
+      textLeading(20);
+      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      pop();
+      
+      push();
       stroke(255, 0, 0);
       line(0, 130, width, 130);
       line(0, 280, width, 280);
@@ -175,14 +180,20 @@ function draw() {
       text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
       
-      text(l1, 50, 552);
-
+      push();
+      textSize(16);
+      textLeading(20);
+      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      pop();
+      
       push();
       stroke(255, 0, 0);
       line(0, 130, width, 130);
       line(0, 280, width, 280);
       pop();
       
+      text(l1, 40, 552);
+
 
   }
   
@@ -197,6 +208,12 @@ function draw() {
       textLeading(150);
       text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
+      
+      push();
+      textSize(16);
+      textLeading(20);
+      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      pop();
       
       text(l1, 40, 552);
       text(l2, 40, 648);
@@ -223,6 +240,12 @@ function draw() {
       text('Cyborg Witch\nTheatre', 40, 130);
       pop(); 
       
+      push();
+      textSize(16);
+      textLeading(20);
+      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      pop();
+      
       text(l1, 40, 552);
       text(l2, 40, 648);
       text(l3, 40, 768);
@@ -244,16 +267,12 @@ function draw() {
   else if (screen==5) {
       background(0, 255, 0);
       mouseSparkle();
-
-            
+      userNameTextBox();
+    
       text('16 let user = CyborgWitch;', 40, 50);
       text('17 input your CyborgWitch username', 40, 74);
       
-      //username text box  
-      userInput = createInput();
-      userInput.position(520, 57+codeOut);
-      userInput.changed(newText);
-
+      
       if (!softWind.isPlaying()){
           softWind.play();
           print('wind is blowing');
@@ -263,8 +282,7 @@ function draw() {
   else if (screen==6) {
       background(0, 255, 0);
       mouseSparkle();
-
-      userInput.changed(newText);
+      userNameTextBox();
 
       
       text('16 let user = CyborgWitch;', 40, 50);
@@ -301,8 +319,8 @@ function draw() {
   else if (screen==7) {
       background(0, 255, 0);
       mouseSparkle();
+      userNameTextBox();
 
-      userInput.changed(newText);
 
                   
       text('16 let user = CyborgWitch;', 40, 50);
@@ -325,8 +343,8 @@ function draw() {
   else if (screen==8) {
       background(0, 255, 0);
       mouseSparkle();
+      userNameTextBox();
 
-      userInput.changed(newText);
       
       if (!incantationSound2.isPlaying() && incantationSound2Count==1) {
           incantationSound2.play();
@@ -353,9 +371,8 @@ function draw() {
   }  
   else if (screen==9) {
       background(0, 255, 0);
-      userInput.changed(newText);
-      userInput.position(520, 57+codeOut);
-
+      userNameTextBox();
+      mouseSparkle();
 
       text('16 let user = CyborgWitch;', 40, 50+codeOut);
       text('17 input your CyborgWitch username', 40, 74+codeOut);
@@ -376,9 +393,8 @@ function draw() {
       perspectiveGrid();
       //opacity = opacity + 1;
       
-      if (codeOut > -800) {
+      if (codeOut > -750) {
           codeOut = codeOut -1;
-          mouseSparkle();
           
           if (!portalSound.isPlaying() && portalSoundCount == 0) {
               portalSound.play();
@@ -388,7 +404,7 @@ function draw() {
 
           //print(codeOut);
       } else {
-          codeOut = -801;
+          codeOut = -751;
           
           push();
             //fill(255, 0, 0, opacity);
@@ -404,12 +420,11 @@ function draw() {
       
   // new text, transition
   else if (screen==10) {
-      background(0, 255, 0);
+      background(0, 255, 75);
       mouseSparkle();
       //opacity = opacity + 1;
       perspectiveGrid();
-      
-      userInput.remove();
+
       push();
       textSize(72);
       textLeading(150);
@@ -425,17 +440,6 @@ function draw() {
 }
 }
 
-// for entering a new username
-function newText() {
-    //userInput.changed(newText+codeOut);
-    userName = userInput.value();
-    userNameIn = true;
-    localStorage.setItem('userName', userName);
-    //console.log(localStorage.getItem('userName'));
-    //userInput.remove();
-    //userInput.position(520, 57+codeOut);
-    
-}
 
 function mousePressed() {
     
@@ -511,7 +515,7 @@ function mousePressed() {
 
   else if (screen==9) {
     //screen = screen + 1;
-    if (opacity > 255 && codeOut  == -801) {
+    if (opacity > 255 && codeOut  == -751) {
         print('screen = 9, next link');
         window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_cyborgWitch5%203/empty-example/");
     }
@@ -534,6 +538,46 @@ function mousePressed() {
 
   }
 
+}
+
+function userNameTextBox() {
+        // screen == 5-9 AND userNameIn ==false
+    if (userNameBox==false){
+     //username text box  
+      userInput = createInput('');
+      userInput.position(520, 57);
+      userInput.changed(newText);
+      userNameBox = true;
+    } else if (userNameBox==true && screen==9) {
+      //userInput.remove();
+      userInput.position(520, 57+codeOut);
+      console.log(codeOut);
+
+    }
+     
+//     } else if (screen==5 || screen==6 || screen==7 || screen==8 || screen==9 && userNameIn==true){
+//       userInput.remove();
+//     }
+    
+//        if (screen==5 || screen==6 || screen==7 || screen==8 && userNameBox==false){
+//     //username text box  
+//      userInput = createInput('');
+//      userInput.position(520, 57+codeOut);
+//      userInput.changed(newText);
+//      userNameBox = true;
+//
+//     
+//     } else if (screen==5 || screen==6 || screen==7 || screen==8 || screen==9 && userNameIn==true){
+//       userInput.remove();
+//     }
+    
+}
+// for entering a new username
+function newText() {
+    userName = userInput.value();
+    userNameIn = true;
+    localStorage.setItem('userName', userName);
+    
 }
 
 // to check whether the username has been entered
@@ -600,5 +644,7 @@ function perspectiveGrid() {
 
     pop();
 }
+    
+    
     
     
