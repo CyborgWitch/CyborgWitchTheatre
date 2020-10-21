@@ -1,7 +1,7 @@
 /*var myVoice = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)*/
 
 var screen = 1;
-var numberOfPages = 6;
+var numberOfPages = 7;
 
 // fonts
 var trickster;
@@ -20,6 +20,10 @@ var stage2;
 var liveCyborgWitch;
 var speechBubble;
 var samplePoemIllustration;
+var popup;
+
+//main backdrop poem illustrations
+var riceMountain, summerWaking, incenseMouth, listenGold, obliqueSeason, richGoldDrunk, dustFlowers, nourishingFlood, rainRoad, boilBoil, leisuredBeauty, freshAir, highestHope, AutumnSong, invertedYarn;
 
 //variables to float in scene
 var backdropMove = -999;      
@@ -37,6 +41,7 @@ var thud2;
 var thud3; 
 var endCyborgWitchXYZ;
 var endCyborgWitchXYZ_COUNT = 0;
+let reverb;
 //not currently used
 //var angle = 0;
 
@@ -51,8 +56,13 @@ let interim = false;
 // incantation is the recognised spoken string
 let incantation = '';
 
+//mic waveform
+var mic;
+var micLevel;
+var micVolHistory = [];
+
 // array of poems
-let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', 
+var poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is in\n// the rice mountain\n// Mould your love book\n// piece by piece', 
 
              '// The broken drink\n// of our young day\n// Drifting, leaves falling,\n// sometimes fragrant\n// Wild fields rising\n// Summer is waking', 
 
@@ -78,10 +88,12 @@ let poems = ['// Fly through grass\n// playing like Summer\n// The moon worm is 
 
              '// See you do not need to\n// cut deep into the fog.\n// The day is in the shadow\n// of the highest hope\n// Go on tiptoe and run\n// carry with you the sun',
 
-             '// Autumn song\n// No longer burn to the\n// moment of Summer.\n// Rain dance the bodies\n// The fevered hour is idle\n// and the wind is sung'];
+             '// Autumn song\n// No longer burn to the\n// moment of Summer.\n// Rain dance the bodies\n// The fevered hour is idle\n// and the wind is sung',
+            
+             '// From one year to next\n// A year from the skin\n// flashed goodbye.\n// The thick mouth taken\n// the long inverted yarn\n// falls deeper still.'];
 
 let choosePoem = '';
-
+var poemIndex;
 
 
 function preload() {
@@ -96,6 +108,24 @@ function preload() {
     stage1 = loadImage('assets/Poetry_sideStage2.jpg');
     speechBubble= loadImage('assets/speechBubble.png');
     witchCursor = loadImage('assets/WitchCursor.png');
+    popup = loadImage('assets/CyborgLovePoems_POPUP.png');
+    
+    // poem illustration stage screens
+    riceMountain = loadImage('assets/poetryStageIllustrations.jpg');
+    summerWaking = loadImage('assets/poetryStageIllustrations2.jpg');
+    incenseMouth = loadImage('assets/poetryStageIllustrations3.jpg');
+    listenGold = loadImage('assets/poetryStageIllustrations4.jpg');
+    obliqueSeason = loadImage('assets/poetryStageIllustrations5.jpg');
+    richGoldDrunk = loadImage('assets/poetryStageIllustrations6.jpg');
+    dustFlowers = loadImage('assets/poetryStageIllustrations7.jpg');
+    nourishingFlood = loadImage('assets/poetryStageIllustrations8.jpg');
+    rainRoad = loadImage('assets/poetryStageIllustrations9.jpg');
+    boilBoil = loadImage('assets/poetryStageIllustrations10.jpg');
+    leisuredBeauty = loadImage('assets/poetryStageIllustrations11.jpg');
+    freshAir = loadImage('assets/poetryStageIllustrations12.jpg');
+    highestHope = loadImage('assets/poetryStageIllustrations13.jpg');
+    AutumnSong = loadImage('assets/poetryStageIllustrations14.jpg');
+    invertedYarn = loadImage('assets/poetryStageIllustrations15.jpg');
     
     // beginning poem
     cyborgWitchXYZ = loadSound('assets/CyborgWitch_scenes Mixdown 2.mp3');
@@ -116,7 +146,6 @@ function gotSpeech() {
         //createP(speechRec.resultString);
         incantation = speechRec.resultString;
         text(incantation, -width/2, -height/2);
-        //speechText.hide();
     
     }
 }
@@ -127,13 +156,14 @@ function setup() {
   // ortho with near-far of the clipping plane going from negative to positive
   ortho(-width/2, width/2,-height/2, height/2, -width*2, width*2);
   background(0, 255, 0);
-    
+  //frameRate(30);
     // webcam
     liveCyborgWitch = createCapture(VIDEO);
     liveCyborgWitch.hide();
     
     textFont(droulers);
-    textSize(96);
+    textSize(72);
+    textLeading(68);
     textAlign(LEFT, CENTER);
 
     angleMode(DEGREES);
@@ -143,6 +173,10 @@ function setup() {
     // start listening, continously picking up speech
     speechRec.start(continuous, interim);
     
+    reverb = new p5.Reverb();
+    //reading the microphone input
+    mic = new p5.AudioIn();
+    mic.start();
 
 /*    myVoice.onResult = showResult; // bind callback function to trigger when speech is recognized
     myVoice.start(); // start listening
@@ -165,7 +199,8 @@ function windowResized() {
     rectMode(CENTER);
     
     textFont(droulers);
-    textSize(96);
+    textSize(72);
+    textLeading(68);
     textAlign(LEFT, CENTER);
 }
 
@@ -179,11 +214,7 @@ function draw() {
     noFill();
     stroke(255, 0, 0);
     strokeWeight(0.75);
-//    noCursor();
-//    push();
-//    translate(mouseX, mouseY);
-//    image(witchCursor, 0, 0, 64, 64);
-//    pop();
+
   //alternate isometric grid
     for (let k = -1400; k < 1400; k += 40) {
         line(k, -1400, k, 1400);
@@ -208,20 +239,21 @@ function draw() {
         push();
         fill(255, 0, 0);
         textAlign(LEFT, CENTER);
-        text('Enter,' + userName, -700, -400);
+        text('Enter scene_1,\n' + userName, -700, -375);
         pop();
     }
     else if (screen==2) {
         push();
         fill(255, 0, 0);
         textAlign(LEFT, CENTER);
-        text('Enter,' + userName, -700, -400);
+        text('Enter scene_1,\n' + userName, -700, -375);
         pop();
         
         print(cyborgWitchXYZ.isPlaying());
         print(cyborgWitchXYZplayed);
         if (!cyborgWitchXYZ.isPlaying() && cyborgWitchXYZplayed == 0) {         //if it's not playing and hasn't been played before
             cyborgWitchXYZ.play();
+            reverb.process(cyborgWitchXYZ, 10, 5);
             cyborgWitchXYZplayed = 1;
         }
         
@@ -261,43 +293,90 @@ function draw() {
   
     else if (screen==3) {
         // draw webcam feed
+        push();
+        fill(255, 0, 0);
+        textAlign(LEFT, CENTER);
+        text('Enter scene_1,\n' + userName, -700, -375);
+        pop();
+    
         sceneScreens();
 
     }
   
-    else if (screen==4) {
+        else if (screen==4) {
+        sceneScreens();
+            
+            // cyborg love poems explainer popup button
+            push();
+            fill(0, 0, 255);
+            
+            if (mouseX > 860 && mouseY > 70 && mouseX < 1340 && mouseY < 230) {
+                image(popup, 440, -300, 425, 225);
+                push();
+                textSize(26);
+                text('Cyborg Love Poems', 260, -370);
+                pop();
+                
+                push();
+                textSize(16);
+                textLeading(19.2);
+                text('SPEAK to invoke this intersection,\nline by line. We have prepared for\nyou 15 wordWorlds generated with a\nmachine learning model trained on\nChinese poetry. ', 260, -285);
+                pop();
+                
+            } else {
+                image(popup, 440, -300, 400, 200);
+                
+                push();
+                textSize(25);
+                text('Cyborg Love Poems', 270, -365);
+                pop();
+                
+                push();
+                textSize(15);
+                textLeading(18);
+                text('SPEAK to invoke this intersection,\nline by line. We have prepared for\nyou 15 wordWorlds generated with a\nmachine learning model trained on\nChinese poetry.', 270, -285);
+                pop();
+            }
+            
+        pop();
+
+    
+    
+    }
+    
+    else if (screen==5) {
         sceneScreens();
         // speechBubble and poem texts
         image(speechBubble, -500, 180, 450, 300);
         textFont(droulers);
-        textSize(42);
+        textSize(36);
 
         push();
             fill(0, 0, 255);
-            text('Script', -680, 105);
+            text('Poems', -670, 110);
 
-            textSize(20);
-            textLeading(22);
-            text(choosePoem, -680, 205);
+            textSize(18);
+            textLeading(21);
+            text(choosePoem, -670, 205);
         pop();
     
     
     }
   
-    else if (screen==5) {
+    else if (screen==6) {
         sceneScreens();
         
         // speechBubble and poem text
         image(speechBubble, -500, 180, 450, 300);
         textFont(droulers);
-        textSize(42);
+        textSize(36);
 
         push();
             fill(0, 0, 255);
-            text('Script', -680, 105);
-            textSize(20);
-            textLeading(22);
-            text(choosePoem, -680, 205);
+            text('Poems', -670, 110);
+            textSize(18);
+            textLeading(21);
+            text(choosePoem, -670, 205);
         pop();
     
         // speechRec 'incantation' PRINT to stage   
@@ -311,14 +390,14 @@ function draw() {
             text(incantation, textX-100, textY+180);
         pop();
         
-        button = createButton('Stage 2');
+        button = createButton('Enter scene_2');
         button.position(19, 19);
-        button.mousePressed(Stage2);
+        button.mousePressed(scene2);
         
     }
     
   
-    else if (screen==6) {
+    else if (screen==7) {
         sceneScreens();
         if (endCyborgWitchXYZ_COUNT==1 && !endCyborgWitchXYZ.isPlaying() && backdropMove < -800 && stage1Move < 1300 && stage2Move < 1000) {
             //if () endCyborgWitch is not playing and has played once, and all the screens are out of frame, replace the URL. 
@@ -326,7 +405,7 @@ function draw() {
         }
     }
     
-    else if (screen==7) {
+    else if (screen==8) {
     }  
 }
 
@@ -336,16 +415,81 @@ function sceneScreens () {
     // draw main image backdrop
     push();
         rotateX(30);
-        rotateY(49.1);        
+        rotateY(49);        
         image(backdrop, 305, -187+backdropMove, 1100, 586);
-    pop();
     
-        if (screen == 3 || screen == 4 || screen == 5) {
+        // poetry illustrations
+        if (screen==5 || screen==6) {
+            
+            if (poemIndex==0) {
+                image(riceMountain, 305, -187, 1100, 586);
+            } else if (poemIndex==1) {
+                image(summerWaking, 305, -187, 1100, 586);
+            } else if (poemIndex==2) {
+                image(incenseMouth, 305, -187, 1100, 586);
+            } else if (poemIndex==3) {
+                image(listenGold, 305, -187, 1100, 586);
+            } else if (poemIndex==4) {
+                image(obliqueSeason, 305, -187, 1100, 586);
+            } else if (poemIndex==5) {
+                image(richGoldDrunk, 305, -187, 1100, 586);
+            } else if (poemIndex==6) {
+                image(dustFlowers, 305, -187, 1100, 586);
+            } else if (poemIndex==7) {
+                image(nourishingFlood, 305, -187, 1100, 586);
+            } else if (poemIndex==8) {
+                image(rainRoad, 305, -187, 1100, 586);
+            } else if (poemIndex==9) {
+                image(boilBoil, 305, -187, 1100, 586);
+            } else if (poemIndex==10) {
+                image(leisuredBeauty, 305, -187, 1100, 586);
+            } else if (poemIndex==11) {
+                image(freshAir, 305, -187, 1100, 586);
+            } else if (poemIndex==12) {
+                image(highestHope, 305, -187, 1100, 586);
+            } else if (poemIndex==13) {
+                image(AutumnSong, 305, -187, 1100, 586);
+            } else if (poemIndex==14) {
+                image(invertedYarn, 305, -187, 1100, 586);
+            }
+        }
+    pop();
+        
+        // webcam and volume visualiser
+        if (screen==3 || screen==4 || screen==5 || screen==6) {
         // show webcam feed
-        push();
-            rotateX(30);
-            rotateY(-49);
-            image(liveCyborgWitch, -520, -440, 380, 180);
+            push();
+                rotateX(30);
+                rotateY(-49);
+                tint(0, 255, 255);
+                image(liveCyborgWitch, -525, -445, 320, 173);
+
+            pop();
+
+            //mic level visualiser. 
+            micLevel = mic.getLevel();
+            micVolHistory.push(micLevel);
+
+            push();
+                rotateX(30);
+                rotateY(-49);
+                  stroke(255, 0, 0);
+                  strokeWeight(10);
+                  //starting point
+                  translate(-780, -410);
+                  // continuous mapping of microphone input volume.
+                  for (let i = 0; i < micVolHistory.length; i++) {
+                       //console.log(micVolHistory[i]);
+                       var y = map(micVolHistory[i], 0, 1, 200, 0);
+                       //console.log(y);
+
+                       point(i, y);
+                  }
+                  //where it stops(bounds of the voice_speech box)
+                  if (micVolHistory.length > 510) {
+                      micVolHistory.splice(0, 1);
+                  }
+
         pop();
         
         }
@@ -357,14 +501,14 @@ function sceneScreens () {
         image(stage1, 549, 559+stage1Move, 610, 586);
     pop();
     
-    if (screen==3 || screen==4 || screen==5) {
+    if (screen==3 || screen==4 || screen==5 || screen==6) {
         backdropMove = 0;
         stage1Move = 0;
         stage2Move = 0;
 
     }
     
-    if (screen==6) {
+    if (screen==7) {
         print('hello we r trying to float');
         
         push();            
@@ -387,7 +531,9 @@ function sceneScreens () {
 function mousePressed() {
     
     // click the mouse to shuffle through the poems
-    choosePoem = random(poems);
+    poemIndex = int(random(0, 14));
+    choosePoem = poems[poemIndex];
+    console.log(poemIndex);
 
     if (screen==1) {
         screen = screen + 1;
@@ -405,11 +551,14 @@ function mousePressed() {
     }
   
     else if (screen==4) {
-        screen = screen + 1;
-
+        if (mouseX > 860 && mouseY > 70 && mouseX < 1340 && mouseY < 230) {
+            screen = screen + 1;
+        }
     }
   
     else if (screen==5) {
+        screen = screen + 1;
+
 
     }
   
@@ -426,12 +575,13 @@ function mousePressed() {
     
 }
 
-function Stage2() {
+function scene2() {
     
-    screen = 6;
+    screen = 7;
     
     if (endCyborgWitchXYZ_COUNT==0 && !endCyborgWitchXYZ.isPlaying()) {
         endCyborgWitchXYZ.play();
+        reverb.process(endCyborgWitchXYZ, 10, 5);
         endCyborgWitchXYZ_COUNT = 1;
     }
     
