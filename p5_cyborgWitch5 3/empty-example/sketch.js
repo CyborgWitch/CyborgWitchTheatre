@@ -111,21 +111,22 @@ function preload() {
     popup = loadImage('assets/CyborgLovePoems_POPUP.png');
     
     // poem illustration stage screens
-    riceMountain = loadImage('assets/poetryStageIllustrations.jpg');
-    summerWaking = loadImage('assets/poetryStageIllustrations2.jpg');
-    incenseMouth = loadImage('assets/poetryStageIllustrations3.jpg');
-    listenGold = loadImage('assets/poetryStageIllustrations4.jpg');
-    obliqueSeason = loadImage('assets/poetryStageIllustrations5.jpg');
-    richGoldDrunk = loadImage('assets/poetryStageIllustrations6.jpg');
-    dustFlowers = loadImage('assets/poetryStageIllustrations7.jpg');
-    nourishingFlood = loadImage('assets/poetryStageIllustrations8.jpg');
-    rainRoad = loadImage('assets/poetryStageIllustrations9.jpg');
-    boilBoil = loadImage('assets/poetryStageIllustrations10.jpg');
-    leisuredBeauty = loadImage('assets/poetryStageIllustrations11.jpg');
-    freshAir = loadImage('assets/poetryStageIllustrations12.jpg');
-    highestHope = loadImage('assets/poetryStageIllustrations13.jpg');
-    AutumnSong = loadImage('assets/poetryStageIllustrations14.jpg');
-    invertedYarn = loadImage('assets/poetryStageIllustrations15.jpg');
+    riceMountain = loadImage('assets/PoetryStageIllustrations.jpg');
+    summerWaking = loadImage('assets/PoetryStageIllustrations2.jpg');
+    incenseMouth = loadImage('assets/PoetryStageIllustrations3.jpg');
+    listenGold = loadImage('assets/PoetryStageIllustrations4.jpg');
+    obliqueSeason = loadImage('assets/PoetryStageIllustrations5.jpg');
+    richGoldDrunk = loadImage('assets/PoetryStageIllustrations6.jpg');
+    dustFlowers = loadImage('assets/PoetryStageIllustrations7.jpg');
+    nourishingFlood = loadImage('assets/PoetryStageIllustrations8.jpg');
+    rainRoad = loadImage('assets/PoetryStageIllustrations9.jpg');
+    boilBoil = loadImage('assets/PoetryStageIllustrations10.jpg');
+    leisuredBeauty = loadImage('assets/PoetryStageIllustrations11.jpg');
+    freshAir = loadImage('assets/PoetryStageIllustrations12.jpg');
+    highestHope = loadImage('assets/PoetryStageIllustrations13.jpg');
+    AutumnSong = loadImage('assets/PoetryStageIllustrations14.jpg');
+    invertedYarn = loadImage('assets/PoetryStageIllustrations15.jpg');
+    
     
     // beginning poem
     cyborgWitchXYZ = loadSound('assets/CyborgWitch_scenes Mixdown 2.mp3');
