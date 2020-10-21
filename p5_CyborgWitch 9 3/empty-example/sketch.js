@@ -491,6 +491,10 @@ function draw() {
         pop();
         
         stageScreens();
+        
+        if (erhu.isPlaying()) {
+            erhu.stop();
+        }
 
     }
     
