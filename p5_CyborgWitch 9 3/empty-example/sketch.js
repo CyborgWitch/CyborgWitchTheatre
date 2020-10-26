@@ -79,6 +79,11 @@ var thud1, thud2, thud3;
 let reverb;
 var endCyborgWitchXYZ2;
 var endCyborgWitchXYZ2_COUNT = 0;
+var webcamSound;
+var popupByeSound;
+var popupByeSound_COUNT = 0;
+var popupByeSound2;
+
 
 // interaction
 var sczwhoop;
@@ -121,6 +126,8 @@ function preload() {
     
     popup1 = loadImage('assets/OperaOfTheOrchid_POPUP1.png');
     popup2 = loadImage('assets/OperaOfTheOrchid_POPUP1.png');
+    popupByeSound = loadSound('assets/magicWand2.mp3');
+    popupByeSound2 = loadSound('assets/magicWand2.mp3');
 
     
     spokenWord = loadSound('assets/CyborgWitch_scenes3 Mixdown 1.mp3');
@@ -128,6 +135,7 @@ function preload() {
     thud1 = loadSound('assets/whoop__ui-back-sound.mp3');
     thud2 = loadSound('assets/whoop__ui-back-sound.mp3');
     thud3 = loadSound('assets/whoop__ui-back-sound.mp3');
+    webcamSound = loadSound('assets/magicWand2.mp3');
     
     sczwhoop = loadSound('assets/dizzyBoltSpell.mp3');
     erhu = loadSound('assets/erhuDistorted.mp3');
@@ -135,7 +143,6 @@ function preload() {
     daluo = loadSound('assets/daluo.mp3');
     bangu = loadSound('assets/Bangu.mp3');
     naobo = loadSound('assets/Naobo.mp3');
-
     
     hand = loadModel('assets/hand-free.obj');
     orchid = loadModel('assets/orchid.obj');
@@ -359,7 +366,13 @@ function draw() {
 
             // next screen if the orchid is there and the sczwhoop is done playing
             if (orchidYes==true && orchidSoundEffect==1 && !sczwhoop.isPlaying()) {
+                // popup gone sound effect
+                if (!popupByeSound.isPlaying() &&popupByeSound_COUNT==0) {
+                    popupByeSound.play();
+                    popupByeSound_COUNT = 1;
+                }
                 screen = 6;
+                
             }
         }
         
@@ -371,8 +384,8 @@ function draw() {
         stageScreens();
             push();
             fill(175, 0, 0);            
-
-            if (mouseX > 70 && mouseY > 560 && mouseX < 370 && mouseY < 740) {
+            print(mouseX, mouseY);
+            if (mouseX > 70 && mouseY > 620 && mouseX < 370 && mouseY < 780) {
                 image(popup2, -480, 250, 425, 220);
                 push();
                 textSize(26);
@@ -487,7 +500,7 @@ function draw() {
             fill(255, 0, 0);
 //            textSize(64);
 //            textLeading(68);
-            text('// For whatever’s yet to input\n// Their futures are afoot\n// And all that’s left unsaid\n// Your choices be not bled', -700, -275);
+            text('// For whatever’s yet to input\n// Your futures are afoot\n// And all that’s left unsaid\n// Your choices be not bled', -700, -275);
         pop();
         
         stageScreens();
@@ -753,11 +766,13 @@ function mousePressed() {
     else if (screen==2) {
         if (backdropMove == 0 && stage1Move == 0 && stage2Move ==0) {
             screen = screen + 1;
+            
         }
     }
     
     else if (screen==3) {
         screen = screen + 1;
+        webcamSound.play();
 
     }
     
@@ -773,6 +788,7 @@ function mousePressed() {
     else if (screen==6) {
           if (mouseX > 70 && mouseY > 560 && mouseX < 370 && mouseY < 740) {
               screen = screen + 1;
+              //popupByeSound2.play();
           }
         
     }
