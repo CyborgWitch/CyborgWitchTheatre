@@ -6,7 +6,7 @@ var numberOfPages = 11;
 // fake code text — poem
 var l1 = ' 1 //Fiends, mysteries, wretched ones,\n 2 //Enter, this Cyborg Witch Theatre.\n 3 //Parse the thresholds in-between\n 4 //Flesh and screen, input and output';
 var l2 = ' 5 //\n 6 //Code walls, witch speak\n 7 //Setup and draw our bodies\n 8 //Into a cyborg witch becoming.\n 9 //Into the wilds of the web.';
-var l3 = '10 //\n11 //We call forth this stage.\n12 //Where possibilities multiply\n13 //Becoming becomes viral.\n14 //Gender x race x sexuality\n15';
+var l3 = '10 //\n11 //We call forth this stage.\n12 //Where dimensions multiply\n13 //Possibilities intersect\n14 //Becoming becomes viral.\n15';
 // fake code text — setup 
 var l4 = '  dimensions.multiply();\n  intersection(Cyborg*Witch);\n  intersection(ofTheBody);\n  intersection.declare(queerChineseAustralianWomxn);';
 var l5 = '  perspective(gridPlane);\n  stage.set(2);\n  stage.scenes(2)';
@@ -52,7 +52,8 @@ var incantationSound1Count = 0;
 var incantationSound2Count = 0;
 var MagicSound;
 var MagicSoundCount = 0;
-
+var thisWaySound;
+var thisWaySoundCount = 0;
 
 let reverb;
 
@@ -79,7 +80,7 @@ function preload() {
     //spoken word
     fiend = loadSound('assets/FIENDS2.mp3');
     theatre = loadSound('assets/SETUP2.mp3');
-    codeForth = loadSound('assets/STAGE2.mp3');
+    codeForth = loadSound('assets/STAGE3.mp3');
     
     //sound effects;
     softWind = loadSound('assets/soft wind.mp3');
@@ -90,6 +91,7 @@ function preload() {
     incantationSound2 = loadSound('assets/magicWand2.mp3');
     MagicSound = loadSound('assets/MagicSound.mp3');
     portalSound = loadSound('assets/MagicalPortalOpen.mp3');
+    thisWaySound = loadSound('assets/this way_door.mp3');
 }
     
 /*function voiceReady() {
@@ -157,7 +159,7 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
       
       push();
@@ -183,7 +185,7 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
       
       push();
@@ -192,6 +194,7 @@ function draw() {
       line(0, 280, width, 280);
       pop();
       
+      text('Enter Cyborg Witches X, Y, & Z:', 108, 504);
       text(l1, 40, 552);
 
 
@@ -212,9 +215,10 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
-      
+    
+      text('Enter Cyborg Witches X, Y, & Z:', 108, 504);
       text(l1, 40, 552);
       text(l2, 40, 648);
       
@@ -243,9 +247,10 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('This website was made for desktop and works best in Chrome. You will be asked\nto grant camera and microphone access for some interactions, but no data\nwill be stored in the server. Click to start the experience and sound.', 50, 350);
+      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
       
+      text('Enter Cyborg Witches X, Y, & Z:', 108, 504);
       text(l1, 40, 552);
       text(l2, 40, 648);
       text(l3, 40, 768);
@@ -291,7 +296,7 @@ function draw() {
       text(userName + ';', 205, 98);
 
       // username entered, sound effect plays and numbers appear
-      if (keyEnter==true && userNameIn==true) {
+      if (keyEnter>=1 && userNameIn==true) {
           text(sideNumbers1, 40, 98);
           text('incantation setup(CyborgWitchTheatre) {\n\n\n\n\n\n\n}\n\nincantation draw(' + userName + ') {\n\n\n\n\n\n\n\n\n}', 80, 146)
 
@@ -412,8 +417,13 @@ function draw() {
             textFont(droulers);
             textSize(141);
             textLeading(136);
-            text('This way, \n'+ userName + '... \nStage 1', 50, 120);
+            text('This way, \n'+ userName + '\n...stage_1', 50, 120);
           pop();
+          
+          if (!thisWaySound.isPlaying() && thisWaySoundCount==0) {
+              thisWaySound.play();
+              thisWaySoundCount = 1;
+          }
           
       }
   }
@@ -644,7 +654,5 @@ function perspectiveGrid() {
 
     pop();
 }
-    
-    
     
     
