@@ -1,6 +1,6 @@
 /*var myVoice = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)*/
 
-var screen = 3;
+var screen = 1;
 var numberOfPages = 7;
 
 // fonts
