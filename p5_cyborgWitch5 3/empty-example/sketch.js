@@ -1,6 +1,6 @@
 /*var myVoice = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)*/
 
-var screen = 1;
+var screen = 3;
 var numberOfPages = 7;
 
 // fonts
@@ -42,8 +42,9 @@ var thud3;
 var endCyborgWitchXYZ;
 var endCyborgWitchXYZ_COUNT = 0;
 let reverb;
-//not currently used
-//var angle = 0;
+var popupHiSound;
+var popupByeSound;
+var popupByeSound_COUNT = 0;
 
 //USERNAME from invitation sketch
 let userName = localStorage.getItem('userName');
@@ -127,7 +128,6 @@ function preload() {
     AutumnSong = loadImage('assets/PoetryStageIllustrations14.jpg');
     invertedYarn = loadImage('assets/PoetryStageIllustrations15.jpg');
     
-    
     // beginning poem
     cyborgWitchXYZ = loadSound('assets/CyborgWitch_scenes Mixdown 2.mp3');
     // end poem
@@ -137,6 +137,9 @@ function preload() {
     thud1 = loadSound('assets/whoop__ui-back-sound.mp3');
     thud2 = loadSound('assets/whoop__ui-back-sound.mp3');
     thud3 = loadSound('assets/whoop__ui-back-sound.mp3');
+    popupHiSound = loadSound('assets/magicWand2.mp3');
+    popupByeSound = loadSound('assets/magicWand2.mp3');
+
     
 }
 
@@ -474,10 +477,10 @@ function sceneScreens () {
             push();
                 rotateX(30);
                 rotateY(-49);
-                  stroke(255, 0, 0);
+                  stroke(0, 255, 0);
                   strokeWeight(10);
                   //starting point
-                  translate(-780, -410);
+                  translate(-777, -410);
                   // continuous mapping of microphone input volume.
                   for (let i = 0; i < micVolHistory.length; i++) {
                        //console.log(micVolHistory[i]);
@@ -487,7 +490,7 @@ function sceneScreens () {
                        point(i, y);
                   }
                   //where it stops(bounds of the voice_speech box)
-                  if (micVolHistory.length > 510) {
+                  if (micVolHistory.length > 505) {
                       micVolHistory.splice(0, 1);
                   }
 
@@ -548,12 +551,14 @@ function mousePressed() {
   
     else if (screen==3) {
         screen = screen + 1;
+        popupHiSound.play();
 
     }
   
     else if (screen==4) {
         if (mouseX > 860 && mouseY > 70 && mouseX < 1340 && mouseY < 230) {
             screen = screen + 1;
+            popupByeSound.play();
         }
     }
   
