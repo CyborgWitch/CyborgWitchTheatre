@@ -159,7 +159,7 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
+      text('Click to start the experience and sound.\n\nThis website was made for PC and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
       
       push();
@@ -185,7 +185,7 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
+      text('Click to start the experience and sound.\n\nThis website was made for PC and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
       
       push();
@@ -215,7 +215,7 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
+      text('Click to start the experience and sound.\n\nThis website was made for PC and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
     
       text('Enter Cyborg Witches X, Y, & Z:', 108, 504);
@@ -247,7 +247,7 @@ function draw() {
       push();
       textSize(16);
       textLeading(20);
-      text('Click to start the experience and sound.\n\nThis website was made for desktop and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
+      text('Click to start the experience and sound.\n\nThis website was made for PC and works best in Chrome at 1440 x 900 px,\non faster computers. You will be asked to grant camera and microphone access\nfor the interactions, but no data will be stored in the server.', 50, 330);
       pop();
       
       text('Enter Cyborg Witches X, Y, & Z:', 108, 504);
@@ -300,11 +300,6 @@ function draw() {
           text(sideNumbers1, 40, 98);
           text('incantation setup(CyborgWitchTheatre) {\n\n\n\n\n\n\n}\n\nincantation draw(' + userName + ') {\n\n\n\n\n\n\n\n\n}', 80, 146)
 
-          
-//          if (!usernameSound.isPlaying() && usernameSoundCount==0) {
-//              usernameSound.play();
-//              usernameSoundCount = 1;
-//          }
           if (!MagicSound.isPlaying() && MagicSoundCount==0) {
               MagicSound.play();
               MagicSoundCount = 1;
