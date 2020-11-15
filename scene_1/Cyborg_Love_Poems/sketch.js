@@ -403,7 +403,7 @@ function draw() {
         sceneScreens();
         if (endCyborgWitchXYZ_COUNT==1 && !endCyborgWitchXYZ.isPlaying() && backdropMove < -800 && stage1Move < 1300 && stage2Move < 1000) {
             //if () endCyborgWitch is not playing and has played once, and all the screens are out of frame, replace the URL. 
-            window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_CyborgWitch%209%203/empty-example/");
+            window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/scene_2/Opera_of_the_Orchid/");
         }
     }
     
