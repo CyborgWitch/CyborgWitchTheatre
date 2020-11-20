@@ -389,7 +389,7 @@ function draw() {
                 image(popup2, -480, 250, 425, 220);
                 push();
                 textSize(26);
-                text('hand_XY_Movenent', -660, 180);
+                text('hand_XY_Movement', -660, 180);
                 pop();
                 
                 push();
