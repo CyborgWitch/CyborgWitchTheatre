@@ -519,7 +519,7 @@ function mousePressed() {
     //screen = screen + 1;
     if (opacity > 255 && codeOut  == -751) {
         print('screen = 9, next link');
-        window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_cyborgWitch5%203/empty-example/");
+        window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/scene_1/Cyborg_Love_Poems/");
     }
   }
   else if (screen==10) {
@@ -528,7 +528,7 @@ function mousePressed() {
 
   else if (screen==11) {
     print('screen = 11, next link');
-    window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/p5_cyborgWitch5%203/empty-example/");
+    window.location.replace("https://cyborgwitch.github.io/CyborgWitchTheatre/scene_1/Cyborg_Love_Poems/");
       
     // start floating the code out of screen. 
 //    if (codeOut < -1000) {
