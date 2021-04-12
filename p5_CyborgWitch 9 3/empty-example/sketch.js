@@ -7,6 +7,11 @@
 ml5 Example
 PoseNet example using p5.js
 === */
+
+// PoseNet motion tracking code by Kyle McDonald. 
+// McDonald, Kyle, 2018. ml5 PoseNet https://editor.p5js.org/kylemcdonald/sketches/H1OoUd9h7, p5 Web Editor
+
+
 var screen = 1;
 var numberOfPages = 6;
 
